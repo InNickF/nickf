@@ -9,7 +9,10 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/netlify": "^6.2.4",
+    "@astrojs/partytown": "^2.1.4",
     "@astrojs/react": "^4.2.1",
+    "@astrojs/sitemap": "^3.3.0",
     "@astrojs/vue": "^5.0.7",
     "@tailwindcss/vite": "^4.0.15",
     "@types/react": "^19.0.12",
@@ -19,5 +22,10 @@
     "react-dom": "^19.0.0",
     "tailwindcss": "^4.0.15",
     "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "prettier": "3.5.3",
+    "prettier-plugin-astro": "0.14.1",
+    "prettier-plugin-tailwindcss": "0.6.11"
   }
 }
