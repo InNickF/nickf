@@ -1,6 +1,6 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
-import { ProjectsSchema } from "./schemas/projects";
+import { ProjectsSchema } from "./models/projects";
 
 const projects = defineCollection({
   loader: glob({
