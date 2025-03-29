@@ -11,7 +11,7 @@ links:
   - href: ""
     text: "Brand Presentation"
 cover:
-  src: "/assets/projects/goeko/cover.png"
+  src: "/assets/projects/goeko/cover.jpg"
   alt: "Goeko | Project Cover"
 date: "2022"
 fields:

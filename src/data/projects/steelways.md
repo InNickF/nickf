@@ -8,7 +8,7 @@ cto:
   href: "https://www.behance.net/gallery/67648685/Steelways-Branding-Identity-Design-Web-Design"
   text: "Presentation"
 cover:
-  src: "/assets/projects/steelways/cover.png"
+  src: "/assets/projects/steelways/cover.webp"
   alt: "Steelways | Project Cover"
 date: "2018"
 fields:

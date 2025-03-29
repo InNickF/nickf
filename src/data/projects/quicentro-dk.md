@@ -7,7 +7,7 @@ cto:
   href: "https://www.behance.net/gallery/90079107/DK-Management-UIUX-Prototype-with-animations"
   text: "Presentation"
 cover:
-  src: "/assets/projects/quicentro-dk/cover.png"
+  src: "/assets/projects/quicentro-dk/cover.webp"
   alt: "Quicentro (DK Management) | Project Cover"
 date: "2020"
 fields:

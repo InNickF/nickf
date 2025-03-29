@@ -5,11 +5,11 @@ description: "
 
 role: "Branding Designer"
 cto:
-  href: ""
+  href: "/docs/mpf-brand-presentation.pdf"
   text: "Presentation"
 cover:
   src: "/assets/projects/marketing-product-fit/cover.png"
-  alt: "InUI | Project Cover"
+  alt: "Marketing Product Fit | Project Cover"
 date: "2021"
 fields:
   - "Branding"

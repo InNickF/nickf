@@ -7,7 +7,7 @@ cto:
   href: "https://www.behance.net/gallery/61993159/Pop-app-Brand-UXUI-IxD-Web-design"
   text: "Presentation"
 cover:
-  src: "/assets/projects/pop/cover.png"
+  src: "/assets/projects/pop/cover.webp"
   alt: "Pop | Project Cover"
 date: "2017 - 2018"
 fields:

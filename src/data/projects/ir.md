@@ -12,7 +12,7 @@ links:
   - href: ""
     text: "Figma"
 cover:
-  src: "/assets/projects/ir/cover.png"
+  src: "/assets/projects/ir/cover.jpg"
   alt: "I.R. Management | Project Cover"
 date: "2022 - 2025"
 fields:

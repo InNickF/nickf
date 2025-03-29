@@ -6,7 +6,7 @@ cto:
   href: "https://www.behance.net/gallery/90031913/China-Motors-UIUX-Design-Web-development"
   text: "Presentation"
 cover:
-  src: "/assets/projects/china-motors/cover.png"
+  src: "/assets/projects/china-motors/cover.webp"
   alt: "China Motors | Project Cover"
 date: "2019"
 fields:

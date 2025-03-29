@@ -13,7 +13,7 @@ links:
   - href: "https://www.figma.com/proto/lRpqAoVWfydnbDXmR2vgOu/InUI-Library?page-id=0%3A1&node-id=5-2&p=f&viewport=240%2C440%2C0.08&t=NJjP6ViAJlQ1E5CN-1&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=5%3A2&show-proto-sidebar=1"
     text: "Figma"
 cover:
-  src: "/assets/projects/inui/cover.png"
+  src: "/assets/projects/inui/cover.jpg"
   alt: "InUI | Project Cover"
 date: "2022 - 2025"
 fields:

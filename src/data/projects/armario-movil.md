@@ -9,7 +9,7 @@ cto:
   href: "https://www.behance.net/gallery/90019413/Armario-Movil-The-First-Fashion-E-commerce-of-Ecuador"
   text: "Presentation"
 cover:
-  src: "/assets/projects/armario-movil/cover.png"
+  src: "/assets/projects/armario-movil/cover.webp"
   alt: "Armario Movil | Project Cover"
 date: "2018 - 2019"
 fields:
