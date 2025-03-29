@@ -8,7 +8,7 @@ cto:
   href: ""
   text: "Presentation"
 cover:
-  src: "/assets/projects/inui/cover.png"
+  src: "/assets/projects/marketing-product-fit/cover.png"
   alt: "InUI | Project Cover"
 date: "2021"
 fields:
