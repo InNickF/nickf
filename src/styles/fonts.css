@@ -1,0 +1,78 @@
+@font-face {
+  font-family: "NotoSans";
+  src: url("/fonts/NotoSans-ExtraLight.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "NotoMono";
+  src: url("/fonts/NotoSansMono-Light.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "NotoSerif";
+  src: url("/fonts/NotoSerifDisplay-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --heading-font: var(--font-serif);
+  --body-font: var(--font-sans);
+  font-size: 16px;
+
+  h1:not([data-ignore-font-style]),
+  h2:not([data-ignore-font-style]),
+  h3:not([data-ignore-font-style]),
+  h4:not([data-ignore-font-style]),
+  h5:not([data-ignore-font-style]),
+  h6:not([data-ignore-font-style]) {
+    font-family: var(--heading-font);
+  }
+
+  p:not([data-ignore-font-style]),
+  a:not([data-ignore-font-style]),
+  span:not([data-ignore-font-style]),
+  li:not([data-ignore-font-style]) {
+    font-family: var(--body-font);
+  }
+
+  h1:not([data-ignore-sizing]) {
+    font-size: var(--sizing-6);
+  }
+
+  h1:not([data-ignore-sizing]) {
+    font-size: var(--sizing-6);
+  }
+
+  h2:not([data-ignore-sizing]) {
+    font-size: var(--sizing-5);
+  }
+
+  h3:not([data-ignore-sizing]) {
+    font-size: var(--sizing-4);
+  }
+
+  h4:not([data-ignore-sizing]) {
+    font-size: var(--sizing-3);
+  }
+
+  h5:not([data-ignore-sizing]) {
+    font-size: var(--sizing-2);
+  }
+
+  h6:not([data-ignore-sizing]) {
+    font-size: var(--sizing-1);
+  }
+
+  p:not([data-ignore-global-css]),
+  a:not([data-ignore-global-css]) {
+    font-size: var(--sizing-0);
+  }
+}

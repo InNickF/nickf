@@ -1,1 +1,26 @@
 @import "tailwindcss";
+@import "./sizing.css";
+@import "./fonts.css";
+@import "./theming.css";
+
+@theme {
+  --color-*: initial;
+  --color-ghost: var(--color-ghost);
+  --color-text-color: var(--color-text-color);
+  --color-card: var(--color-card);
+  --color-over-card: var(--color-over-card);
+  --color-primary: var(--color-primary);
+  --color-over-primary: var(--color-over-primary);
+  --color-secondary: var(--color-secondary);
+  --color-over-secondary: var(--color-over-secondary);
+
+  /* Typography */
+  --font-sans:
+    "NotoSans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono:
+    "NotoMono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  --font-serif:
+    "NotoSerif", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
