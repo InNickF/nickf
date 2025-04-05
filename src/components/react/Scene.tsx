@@ -190,7 +190,6 @@ export function Scene({ className, ...props }: CanvasProps) {
       <EffectComposer multisampling={14}>
         <N8AO distanceFalloff={10} aoRadius={10} intensity={8} />
         <ChromaticAberration offset={[0.001, 0.001]} />
-        <Noise premultiply />
       </EffectComposer>
     </Canvas>
   );

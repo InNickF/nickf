@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 
 const button = cva(
-  "transition-all cursor-pointer flex justify-center items-center [font-family:var(--heading-font)] focus-visible:outline-2 focus-visible:outline-dotted  outline-offset-2",
+  "transition-all relative cursor-pointer flex justify-center items-center [font-family:var(--heading-font)] focus-visible:outline-2 focus-visible:outline-dotted  outline-offset-2",
   {
     variants: {
       intent: {
@@ -12,18 +12,21 @@ const button = cva(
           "text-over-primary",
           "bg-primary",
           "[--_color-used:_var(--color-primary)]",
+          "[--_text-color-used:_var(--color-over-primary)]",
           "outline-primary",
         ],
         secondary: [
           "text-over-secondary",
           "bg-secondary",
           "[--_color-used:_var(--color-secondary)]",
+          "[--_text-color-used:_var(--color-over-secondary)]",
           "outline-secondary",
         ],
         invert: [
           "inverted",
           "text-over-secondary",
           "[--_color-used:_var(--color-secondary)]",
+          "[--_text-color-used:_var(--color-over-secondary)]",
           "outline-secondary",
         ],
       },
@@ -78,22 +81,69 @@ const classes = twMerge(button({ intent, size, disabled }), className);
       disabled={disabled}
       {...props}
     >
-      <slot />
+      <span data-component="button-content">
+        <slot />
+      </span>
     </button>
   )
 }
 
 <style is:global>
+  [data-component="button-content"] {
+    display: inline-block;
+    position: relative;
+    transition-property: translate, scale;
+    transition-duration: 0.1s, 0.1s;
+    transition-timing-function: ease-in-out, ease-in-out;
+  }
+
+  [data-component="button"]:active [data-component="button-content"] {
+    translate: 0 2px;
+    scale: 0.95;
+  }
+
+  [data-component="button"]::after {
+    content: "";
+    border: 2px solid rgba(from var(--_text-color-used) r g b / 0);
+    border-radius: var(--border-radius-general);
+    transition-property: transform, border, border-radius;
+    transition-duration: 0.3s, 0.3s, 0.3s;
+    transition-timing-function: ease-in-out, ease-in-out, ease-in-out;
+    transform: scale3d(0.9, 0.7, 1);
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+  }
+  [data-theme-context="nick"][data-theme="1"] [data-component="button"]::after {
+    transform: scale3d(0.88, 0.77, 1);
+  }
+
+  [data-component="button"]:hover::after {
+    transform: scale3d(0.95, 0.85, 0.95);
+    border-color: rgba(from var(--_text-color-used) r g b / 0.5);
+  }
+  [data-theme-context="nick"][data-theme="1"]
+    [data-component="button"]:hover::after {
+    transform: scale3d(0.95, 0.9, 0.95);
+  }
   [data-component="button"] {
     border-radius: var(--border-radius-general);
   }
   [data-component="button"]:hover {
+    background-color: hsl(from var(--_color-used) h s calc(l - 10));
+  }
+
+  [data-component="button"]:active {
+    background-color: hsl(from var(--_color-used) h s calc(l - 20));
+  }
+
+  [data-component="button"].inverted:hover {
     background-color: hsl(
       from var(--_color-used) h calc(s - 20) calc(l - 10) / 50%
     );
   }
 
-  [data-component="button"]:active {
+  [data-component="button"].inverted:active {
     background-color: hsl(from var(--_color-used) h s calc(l - 20) / 70%);
   }
 

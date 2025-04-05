@@ -1,0 +1,60 @@
+<span
+  data-component="cursor"
+  class="pointer-events-none fixed z-[51] hidden h-0 w-0 items-center justify-center overflow-visible lg:block"
+>
+  <span
+    class="absolute block h-3 w-3 translate-x-[-50%] translate-y-[-50%] bg-[hsl(var(--color-primary)_h_s_l_/_70%)]"
+  ></span>
+</span>
+<style is:global>
+  [data-component="cursor"] span {
+    transition: transform 0.1s ease-in-out;
+    transform: scale(1);
+    backdrop-filter: blur(0px) invert(100%);
+    border-radius: var(--border-radius-general);
+  }
+
+  body {
+    cursor: none;
+  }
+
+  @media (width <= 64rem) {
+    body {
+      cursor: auto;
+    }
+  }
+
+  body:has(button:hover, a:hover, .hoverable:hover, .cursor-pointer:hover)
+    [data-component="cursor"] {
+    span {
+      transform: scale(2);
+    }
+  }
+  body:has(button:active, a:active, .hoverable:active, .cursor-pointer:active)
+    [data-component="cursor"] {
+    span {
+      transform: scale(0.33);
+    }
+  }
+  body:has(.inverted:hover, .inverted:active) [data-component="cursor"] {
+    span {
+      transform: scale(0);
+    }
+  }
+</style>
+<script>
+  import { gsap } from "gsap";
+  const handleMouseMove = (e: MouseEvent) => {
+    const x = e.clientX;
+    const y = e.clientY;
+    const duration = 0.05;
+    gsap.quickTo(`[data-component="cursor"]`, "x", {
+      duration,
+    })(x);
+    gsap.quickTo(`[data-component="cursor"]`, "y", {
+      duration,
+    })(y);
+  };
+
+  window.addEventListener("mousemove", handleMouseMove);
+</script>
