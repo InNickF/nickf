@@ -1,0 +1,211 @@
+<div
+  data-component="art-grid"
+  class="common-fade-in pointer-events-none fixed inset-0 overflow-hidden p-6 transition-opacity"
+>
+  <svg
+    id="lines"
+    class="h-full w-full opacity-100"
+    viewBox="0 0 1920 1080"
+    preserveAspectRatio="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g style="mix-blend-mode:multiply">
+      <g id="vertical">
+        <line
+          class="hero-draw-lines h-full"
+          id="Line 2"
+          x1="494"
+          y1="0"
+          x2="494"
+          y2="1080"
+          stroke="var(--color-primary)"
+          stroke-width="2"></line>
+        <line
+          class="hero-draw-lines h-full"
+          id="Line 4"
+          x1="960.5"
+          y1="0"
+          x2="960.5"
+          y2="1080"
+          stroke="var(--color-primary)"
+          stroke-width="2"></line>
+        <line
+          class="hero-draw-lines h-full"
+          id="Line 5"
+          x1="1426"
+          y1="0"
+          x2="1426"
+          y2="1080"
+          stroke="var(--color-primary)"
+          stroke-width="2"></line>
+      </g>
+      <g id="horizontal">
+        <line
+          class="hero-draw-lines"
+          id="Line 3"
+          x1="1920"
+          y1="540.5"
+          x2="0"
+          y2="540.5"
+          stroke="var(--color-primary)"
+          stroke-width="2"></line>
+      </g>
+    </g>
+  </svg>
+  <div class="absolute inset-6 opacity-25">
+    <svg
+      class="h-full w-full opacity-100"
+      viewBox="0 0 1920 1080"
+      preserveAspectRatio="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g style="mix-blend-mode:multiply">
+        <g>
+          <line
+            class="hidden h-full xl:block"
+            id="Line 2"
+            x1="494"
+            y1="0"
+            x2="494"
+            y2="1080"
+            stroke="var(--color-primary)"
+            stroke-width="2"></line>
+          <line
+            class="h-full"
+            id="Line 4"
+            x1="960.5"
+            y1="0"
+            x2="960.5"
+            y2="1080"
+            stroke="var(--color-primary)"
+            stroke-width="2"></line>
+          <line
+            class="hidden h-full xl:block"
+            id="Line 5"
+            x1="1426"
+            y1="0"
+            x2="1426"
+            y2="1080"
+            stroke="var(--color-primary)"
+            stroke-width="2"></line>
+        </g>
+        <g>
+          <line
+            id="Line 3"
+            x1="1920"
+            y1="540.5"
+            x2="0"
+            y2="540.5"
+            stroke="var(--color-primary)"
+            stroke-width="2"></line>
+        </g>
+      </g>
+    </svg>
+  </div>
+  <div
+    class="absolute inset-x-0 inset-y-6 flex items-center justify-center overflow-hidden"
+  >
+    <svg
+      class="ellipse-grid opacity-100"
+      viewBox="0 0 1000 1000"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g>
+        <circle
+          class="hero-draw-circle"
+          id="ellipse"
+          cx="500"
+          cy="500"
+          r="498"
+          stroke="var(--color-primary)"
+          stroke-width="2"></circle>
+      </g>
+    </svg>
+  </div>
+  <div
+    class="absolute inset-x-0 inset-y-6 flex w-full items-center justify-center overflow-hidden opacity-25"
+  >
+    <svg
+      class="ellipse-grid opacity-100"
+      viewBox="0 0 1000 1000"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g>
+        <circle
+          cx="500"
+          cy="500"
+          r="498"
+          stroke="var(--color-primary)"
+          stroke-width="2"></circle>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<style is:global>
+  [data-component="art-grid"] {
+    --_animation-duration: 4s;
+    animation: hero-fix-opacity 0.5s ease-in-out forwards;
+    animation-delay: var(--_animation-duration);
+    @apply opacity-25 transition;
+    @starting-style {
+      opacity: 0;
+    }
+  }
+
+  @keyframes hero-fix-opacity {
+    0% {
+      opacity: 25%;
+    }
+    100% {
+      opacity: 75%;
+    }
+  }
+  [data-component="art-grid"] svg {
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  [data-theme-context="nick"]:not([data-theme="0"])
+    [data-component="art-grid"]
+    svg {
+    opacity: 0;
+  }
+
+  .ellipse-grid {
+    width: clamp(320px, 47.33%, 1280px);
+  }
+
+  @keyframes hero-draw-grid-lines {
+    0% {
+      stroke-dashoffset: -130%;
+    }
+    100% {
+      stroke-dashoffset: 250%;
+    }
+  }
+
+  @keyframes hero-draw-circle {
+    0% {
+      stroke-dashoffset: -310%;
+    }
+    100% {
+      stroke-dashoffset: 500%;
+    }
+  }
+
+  .hero-draw-lines {
+    stroke-dasharray: 3000;
+    stroke-dashoffset: -130%;
+    animation: hero-draw-grid-lines ease-in-out forwards;
+    animation-duration: var(--_animation-duration);
+  }
+
+  .hero-draw-circle {
+    stroke-dasharray: 5000;
+    stroke-dashoffset: -320%;
+    animation: hero-draw-circle ease-in-out forwards;
+    animation-duration: var(--_animation-duration);
+  }
+</style>

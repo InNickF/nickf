@@ -1,0 +1,67 @@
+<div
+  data-component="cta-container"
+  class="aspect-square h-full overflow-hidden p-1"
+>
+  <div
+    data-component="logo-wrapper"
+    class="bg-ghost relative aspect-square h-full w-full overflow-hidden"
+  >
+    <svg
+      data-component="logo"
+      class="h-full w-full"
+      id="Logo"
+      viewBox="0 0 148 148"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M0 0H148V148H0V0ZM95.9237 74H74V52.0763C74 64.1844 64.1844 74 52.0763 74H74V95.9237C74 83.8156 83.8156 74 95.9237 74Z"
+        fill="var(--_logo-color)"></path>
+    </svg>
+  </div>
+</div>
+
+<style is:global>
+  [data-component="cta-container"] {
+    --_logo-color: var(--color-primary);
+    border-radius: var(--border-radius-general);
+  }
+
+  [data-theme-context="nick"][data-theme="0"] {
+    [data-component="cta-container"] {
+      background-color: var(--_logo-color);
+    }
+  }
+
+  [data-theme-context="nick"][data-theme="1"] {
+    [data-component="cta-container"] {
+      background-color: transparent;
+    }
+  }
+  [data-component="logo-wrapper"] {
+    overflow: hidden;
+    border-radius: var(--border-radius-general);
+  }
+
+  [data-component="logo"] {
+    --_logo-color: var(--color-primary);
+    transform: scale(2);
+    transform-origin: center center;
+    position: absolute;
+    translate: -50% -50%;
+    top: 50%;
+    left: 50%;
+    will-change: transform;
+  }
+</style>
+<script>
+  const logo: SVGAElement = document.querySelector("#Logo")!;
+
+  window.addEventListener("scroll", () => {
+    const scrollTop = window.scrollY;
+    const rotation = scrollTop * 0.5; // Adjust factor as needed
+    logo.style.rotate = `${rotation}deg`;
+  });
+</script>

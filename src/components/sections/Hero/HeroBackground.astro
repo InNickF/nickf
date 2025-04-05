@@ -1,0 +1,29 @@
+---
+import Card from "@/components/general/Card.astro";
+---
+
+<Card
+  class="header-background absolute inset-x-6 -z-10 h-[calc(100dvh-3rem)] w-[calc(100%-3rem)] lg:h-[calc(50dvh--2.5rem-4rem)]"
+>
+  <span></span>
+</Card>
+<style is:global>
+  @keyframes hero-bg-entrance {
+    0% {
+      transform: scaleY(0);
+    }
+    100% {
+      transform: scaleY(1);
+    }
+  }
+  [data-theme-context="nick"][data-theme="0"][data-theme-hue="350"]
+    .header-background {
+    transform: scaleY(0);
+    animation: hero-bg-entrance 1s ease-in-out forwards;
+    animation-delay: 1.5s;
+  }
+
+  [data-theme-context="nick"][data-theme="0"] .header-background {
+    background-color: var(--color-card);
+  }
+</style>

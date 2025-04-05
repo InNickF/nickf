@@ -23,4 +23,44 @@
     "Liberation Mono", "Courier New", monospace;
   --font-serif:
     "NotoSerif", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+
+  /* Breakpoints */
+  --breakpoint-3xl: 120.01rem;
+  --breakpoint-4xl: 140.01rem;
+}
+
+::selection {
+  background-color: var(--color-primary);
+  color: var(--color-over-primary);
+}
+
+:root {
+  scroll-behavior: smooth;
+}
+
+*,
+*::before,
+*::after {
+  transition-property: background-color, opacity, color, border-radius;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
+}
+
+@keyframes common-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.common-fade-in {
+  animation: common-fade-in 1s ease-in-out forwards;
+}
+
+.react-scene {
+  animation: common-fade-in 1s ease-in-out forwards;
+  animation-delay: 1.5s;
+  opacity: 0;
 }

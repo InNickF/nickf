@@ -1,0 +1,76 @@
+---
+import { twMerge } from 'tailwind-merge';
+
+const lines = [
+  "Product Designer",
+  "Front-End Developer",
+];
+export interface Props {
+  class?: string;
+}
+
+const classes = twMerge("relative flex h-full flex-nowrap items-center gap-4 overflow-hidden text-2xl", Astro.props.class);
+---
+
+<h2
+  data-component="navbar-marquee"
+  data-ignore-sizing
+  class={classes}
+>
+  <span
+    data-component="navbar-marquee-element"
+    class="flex h-full w-max items-center"
+  >
+    {lines.map((line, i) => {
+        return (
+        <span>{line}</span>
+        <span class="bg-[currentColor] block h-2 w-2 rounded-[var(--border-radius-general)]" />
+      )})
+    }
+  </span>
+  <span
+    aria-hidden="true"
+    data-component="navbar-marquee-element"
+    class="flex h-full w-max items-center"
+  >
+    {lines.map((line, i) => {
+        return (
+        <span>{line}</span>
+        <span class="bg-[currentColor] block h-2 w-2 rounded-[var(--border-radius-general)]" />
+      )})
+    }
+  </span>
+    <span
+    aria-hidden="true"
+    data-component="navbar-marquee-element"
+    class="flex h-full w-max items-center"
+  >
+    {lines.map((line, i) => {
+        return (
+        <span>{line}</span>
+        <span class="bg-text-color block h-2 w-2 rounded-[var(--border-radius-general)]" />
+      )})
+    }
+  </span>
+</h2>
+
+<style is:global>
+  @keyframes navbar-marquee {
+    to {
+      transform: translateX(calc(-100% - var(--_gap)));
+    }
+  }
+  [data-component="navbar-marquee"] * {
+    font-family: var(--heading-font);
+  }
+
+  [data-component="navbar-marquee-element"] {
+    --_gap: 1rem /* spacing(6) */;
+    --_time: 12s;
+    gap: var(--_gap);
+    text-wrap: nowrap;
+    height: 100%;
+    user-select: none;
+    animation: navbar-marquee var(--_time) linear infinite;
+  }
+</style>

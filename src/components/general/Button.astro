@@ -1,0 +1,91 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cva, type VariantProps } from "class-variance-authority";
+import { twMerge } from "tailwind-merge";
+
+const button = cva(
+  "transition-all cursor-pointer flex justify-center items-center [font-family:var(--heading-font)] focus-visible:outline-2 focus-visible:outline-dotted  outline-offset-2",
+  {
+    variants: {
+      intent: {
+        primary: [
+          "text-over-primary",
+          "bg-primary",
+          "[--_color-used:_var(--color-primary)]",
+          "outline-primary",
+        ],
+        secondary: [
+          "text-over-secondary",
+          "bg-secondary",
+          "[--_color-used:_var(--color-secondary)]",
+          "outline-secondary",
+        ],
+      },
+      size: {
+        medium: ["text-base", "py-2", "px-4"],
+        large: ["text-2xl", "py-4", "px-8"],
+      },
+      disabled: {
+        false: null,
+        true: ["opacity-50", "cursor-not-allowed"],
+      },
+    },
+  },
+);
+export interface ButtonProps
+  extends Omit<HTMLAttributes<"button">, "disabled">,
+    VariantProps<typeof button> {
+  isLink?: boolean;
+  href?: string;
+  target?: string;
+}
+export type Props = ButtonProps;
+
+const {
+  class: className,
+  intent = "primary",
+  size = "medium",
+  isLink = false,
+  disabled = false,
+  ...props
+} = Astro.props;
+
+const classes = twMerge(button({ intent, size, disabled }), className);
+---
+
+{
+  isLink ? (
+    <a
+      data-component="button"
+      class={classes}
+      href={Astro.props.href}
+      target={Astro.props.target}
+      {...props}
+    >
+      <slot />
+    </a>
+  ) : (
+    <button
+      data-component="button"
+      class={classes}
+      type={Astro.props.type ?? "button"}
+      disabled={disabled}
+      {...props}
+    >
+      <slot />
+    </button>
+  )
+}
+
+<style is:global>
+  [data-component="button"] {
+    border-radius: var(--border-radius-general);
+  }
+  [data-component="button"]:hover {
+    background-color: hsl(from var(--_color-used) h s calc(l - 5));
+  }
+
+  [data-component="button"]:active {
+    background-color: hsl(from var(--_color-used) h s calc(l - 10));
+  }
+</style>

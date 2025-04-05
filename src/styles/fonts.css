@@ -38,41 +38,49 @@
 
   p:not([data-ignore-font-style]),
   a:not([data-ignore-font-style]),
-  span:not([data-ignore-font-style]),
   li:not([data-ignore-font-style]) {
     font-family: var(--body-font);
   }
 
-  h1:not([data-ignore-sizing]) {
+  h1:not([data-ignore-sizing]),
+  .h1-size {
     font-size: var(--sizing-6);
+    line-height: var(--sizing-7);
   }
 
-  h1:not([data-ignore-sizing]) {
-    font-size: var(--sizing-6);
-  }
-
-  h2:not([data-ignore-sizing]) {
+  h2:not([data-ignore-sizing]),
+  .h2-size {
     font-size: var(--sizing-5);
+    line-height: var(--sizing-6);
   }
 
-  h3:not([data-ignore-sizing]) {
+  h3:not([data-ignore-sizing]),
+  .h3-size {
     font-size: var(--sizing-4);
+    line-height: var(--sizing-5);
   }
 
-  h4:not([data-ignore-sizing]) {
+  h4:not([data-ignore-sizing]),
+  .h4-size {
     font-size: var(--sizing-3);
+    line-height: var(--sizing-4);
   }
 
-  h5:not([data-ignore-sizing]) {
+  h5:not([data-ignore-sizing]),
+  .h5-size {
     font-size: var(--sizing-2);
+    line-height: var(--sizing-3);
   }
 
-  h6:not([data-ignore-sizing]) {
+  h6:not([data-ignore-sizing]),
+  .h6-size {
     font-size: var(--sizing-1);
+    line-height: var(--sizing-2);
   }
 
-  p:not([data-ignore-global-css]),
-  a:not([data-ignore-global-css]) {
+  p:not([data-ignore-sizing]),
+  a:not([data-ignore-sizing]) {
     font-size: var(--sizing-0);
+    line-height: var(--sizing-1);
   }
 }

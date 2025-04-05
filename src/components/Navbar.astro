@@ -1,0 +1,81 @@
+---
+import Button from "./general/Button.astro";
+import Card from "./general/Card.astro";
+import ContactIcon from "./icons/ContactIcon.astro";
+import Logo from "./Logo.astro";
+import NavbarMarquee from "./NavbarMarquee.astro";
+---
+
+<div
+  data-component="navbar-grid"
+  class="4xl:gap-8 fixed top-6 z-50 grid w-full gap-6 px-6 lg:sticky"
+>
+  <Card data-component="navbar" class="grid items-center gap-3" as="navbar">
+    <Logo />
+    <div
+      class="grid grid-cols-1 items-center gap-0 md:grid-cols-[minmax(0,1fr)minmax(0,2fr)] md:gap-4 lg:grid-cols-[minmax(0,1fr)minmax(0,2fr)] xl:grid-cols-2"
+    >
+      <h1 data-ignore-sizing class="text-xl lg:text-2xl">Nick Fuenmayor</h1>
+      <div data-component="section-name" class="hidden h-full md:block">
+        <NavbarMarquee />
+      </div>
+    </div>
+    <div
+      data-component="cta-container"
+      class="aspect-square h-full overflow-hidden p-1"
+    >
+      <Button title="Contact" isLink href="#contact" class="h-full">
+        <ContactIcon class="h-6 w-6" />
+      </Button>
+    </div>
+  </Card>
+</div>
+
+<style is:global>
+  @keyframes navbar-entrance {
+    0% {
+      opacity: 0;
+      transform: var(--_animation-origin);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  [data-theme-context="nick"][data-theme="0"][data-theme-hue="350"]
+    [data-component="navbar"] {
+    --_animation-origin: translateY(-200%);
+    transform: var(--_animation-origin);
+    opacity: 0;
+    animation: navbar-entrance 1s ease-in-out forwards;
+    animation-delay: 1.5s;
+  }
+
+  @media (width > 80rem) {
+    [data-theme-context="nick"][data-theme="0"][data-theme-hue="350"]
+      [data-component="navbar"] {
+      --_animation-origin: translateY(200%);
+    }
+  }
+
+  [data-theme-context="nick"][data-theme="0"] [data-component="navbar"] {
+    background-color: var(--color-ghost);
+  }
+
+  [data-component="navbar-grid"] {
+    --_height: 4rem;
+    grid-template-columns: [content-start] 1fr [content-end];
+  }
+  @media (width >= 80rem) /** XL */ {
+    [data-component="navbar-grid"] {
+      grid-template-columns: 1fr [content-start] 2fr [content-end] 1fr;
+    }
+  }
+
+  [data-component="navbar"] {
+    grid-column: content;
+    grid-template-columns: var(--_height) 1fr var(--_height);
+    padding: 0;
+    height: var(--_height);
+  }
+</style>
