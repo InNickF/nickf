@@ -20,6 +20,12 @@ const button = cva(
           "[--_color-used:_var(--color-secondary)]",
           "outline-secondary",
         ],
+        invert: [
+          "inverted",
+          "text-over-secondary",
+          "[--_color-used:_var(--color-secondary)]",
+          "outline-secondary",
+        ],
       },
       size: {
         medium: ["text-base", "py-2", "px-4"],
@@ -27,7 +33,7 @@ const button = cva(
       },
       disabled: {
         false: null,
-        true: ["opacity-50", "cursor-not-allowed"],
+        true: ["opacity-70", "cursor-not-allowed"],
       },
     },
   },
@@ -82,10 +88,29 @@ const classes = twMerge(button({ intent, size, disabled }), className);
     border-radius: var(--border-radius-general);
   }
   [data-component="button"]:hover {
-    background-color: hsl(from var(--_color-used) h s calc(l - 5));
+    background-color: hsl(
+      from var(--_color-used) h calc(s - 20) calc(l - 10) / 50%
+    );
   }
 
   [data-component="button"]:active {
-    background-color: hsl(from var(--_color-used) h s calc(l - 10));
+    background-color: hsl(from var(--_color-used) h s calc(l - 20) / 70%);
+  }
+
+  [data-component="button"].inverted {
+    animation: inverted-button 0.5s ease-in-out forwards;
+    animation-delay: 2s;
+    backdrop-filter: invert(0) blur(0.3px) hue-rotate(0);
+    background-color: hsl(from var(--color-secondary) h s l / 100%);
+  }
+  @keyframes inverted-button {
+    0% {
+      backdrop-filter: invert(0) blur(0px) hue-rotate(0);
+    }
+
+    100% {
+      backdrop-filter: invert(100%) blur(2.33px) hue-rotate(360deg);
+      background-color: hsl(from var(--color-secondary) h s l / 30%);
+    }
   }
 </style>

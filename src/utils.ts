@@ -1,7 +1,9 @@
 import { dispatchThemeChangedEvent } from "./events/changeTheme";
 
 const changeTheme = () => {
-  const themeContext = document.querySelector(`[data-theme-context="nick"]`);
+  const themeContext = document.querySelector(
+    `[data-theme-context="nick"]`,
+  ) as HTMLDivElement;
   if (!themeContext) return;
 
   const currentTheme = Number(themeContext.getAttribute("data-theme") || 0);
@@ -16,7 +18,9 @@ const changeTheme = () => {
     "data-theme-hue",
     String(randomHue === 350 ? 351 : randomHue),
   );
+  themeContext.style.setProperty("--_app-hue", randomHue.toString());
   themeContext.setAttribute("data-theme", String(nextTheme));
+
   repaintingForIOSUsers();
   dispatchThemeChangedEvent();
 };
@@ -42,7 +46,7 @@ function throttle<T extends (...args: any[]) => void>(fn: T, delay: number): T {
   } as T;
 }
 
-export const throttleChangeTheme = throttle(changeTheme, 1000);
+export const throttleChangeTheme = throttle(changeTheme, 100);
 
 export function modifyHSL(
   hslString: string,
@@ -52,8 +56,21 @@ export function modifyHSL(
     l?: (l: number) => number;
   },
 ): string {
-  const match = hslString.match(/^hsl\(\s*(\d+),\s*(\d+)%?,\s*(\d+)%?\s*\)$/i);
+  const themeContext = document.querySelector(`[data-theme-context="nick"]`);
+  if (!themeContext) return hslString;
+
+  const currentHue = themeContext.getAttribute("data-theme-hue") || "350";
+
+  const hslReplacedString = hslString.replace(
+    "attr(data-theme-hue type(<number>), 350)",
+    currentHue,
+  );
+  const match = hslReplacedString.match(
+    /^hsl\(\s*(\d+),\s*(\d+)%?,\s*(\d+)%?\s*\)$/i,
+  );
   if (!match) {
+    console.log(`Invalid HSL string: ${hslString}`);
+
     throw new Error("Invalid HSL format");
   }
 

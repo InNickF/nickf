@@ -110,7 +110,7 @@ const classes = twMerge(" border-transparent", className);
         var(--surface-1),
         transparent
       )
-      padding-box;
+      50% padding-box;
     --_cover: linear-gradient(var(--surface-1), var(--surface-1)) padding-box;
     --_shine: conic-gradient(
         from var(--angle),
@@ -168,11 +168,10 @@ const classes = twMerge(" border-transparent", className);
   }
 
   @keyframes shine {
-    0%,
-    45% {
+    0% {
       --shine: transparent;
     }
-    80% {
+    100% {
       --shine: hsl(from var(--color-ghost) h s calc(l + 80));
     }
   }

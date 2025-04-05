@@ -1,0 +1,42 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { twMerge } from "tailwind-merge";
+
+export interface Props extends HTMLAttributes<"div"> {}
+
+const { class: className, ...props } = Astro.props;
+const classes = twMerge("aspect-square h-full overflow-hidden p-1", className);
+---
+
+<div data-component="cta-container" class={classes}>
+  <slot />
+</div>
+
+<style is:global>
+  [data-component="cta-container"] {
+    --_logo-color: var(--color-primary);
+    border-radius: var(--border-radius-general);
+  }
+
+  [data-theme-context="nick"][data-theme="0"] {
+    [data-component="cta-container"] {
+      background-color: var(--_logo-color);
+    }
+  }
+
+  [data-theme-context="nick"][data-theme="1"] {
+    [data-component="cta-container"] {
+      background-color: transparent;
+    }
+  }
+
+  [data-component="cta-container"]:hover {
+    background-color: hsl(
+      from var(--_logo-color) h calc(s - 20) calc(l - 10) / 50%
+    );
+  }
+
+  [data-component="cta-container"]:active {
+    background-color: hsl(from var(--_logo-color) h s calc(l - 20) / 70%);
+  }
+</style>

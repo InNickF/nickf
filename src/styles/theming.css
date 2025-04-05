@@ -1,7 +1,7 @@
 [data-theme-context="nick"],
 [data-theme-context="nick"][data-theme="0"] {
   /* Colors */
-  --hue: attr(data-theme-hue type(<number>), 350);
+  --hue: var(--_app-hue, 350);
   --saturation: 23%;
   --lightness: 40%;
   --color-ghost: hsl(calc(var(--hue) + 40), 76%, 95%);
@@ -31,7 +31,7 @@
   --lightness: 80%;
   --color-text-color: hsl(calc(var(--hue)), 1%, 100%);
   --color-ghost: hsl(calc(var(--hue)), 30%, 10%);
-  --heading-font: var(--font-mono);
+  --heading-font: var(--font-sans);
   --border-radius-general: --spacing(8);
   --color-secondary: hsl(calc(var(--hue)), 80%, 80%);
   --color-over-secondary: hsl(from var(--color-text-color) h s calc(l - 80));

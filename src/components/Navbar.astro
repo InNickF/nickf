@@ -1,6 +1,7 @@
 ---
 import Button from "./general/Button.astro";
 import Card from "./general/Card.astro";
+import CtaContainer from "./general/CtaContainer.astro";
 import ContactIcon from "./icons/ContactIcon.astro";
 import Logo from "./Logo.astro";
 import NavbarMarquee from "./NavbarMarquee.astro";
@@ -10,24 +11,27 @@ import NavbarMarquee from "./NavbarMarquee.astro";
   data-component="navbar-grid"
   class="4xl:gap-8 fixed top-6 z-50 grid w-full gap-6 px-6 lg:sticky"
 >
-  <Card data-component="navbar" class="grid items-center gap-3" as="navbar">
+  <Card
+    data-component="navbar"
+    class="grid items-center gap-3 backdrop-blur-xs"
+    as="navbar"
+  >
     <Logo />
     <div
-      class="grid grid-cols-1 items-center gap-0 md:grid-cols-[minmax(0,1fr)minmax(0,2fr)] md:gap-4 lg:grid-cols-[minmax(0,1fr)minmax(0,2fr)] xl:grid-cols-2"
+      class="grid grid-cols-1 items-center gap-0 md:grid-cols-[minmax(0,1fr)minmax(0,2fr)] md:gap-4 lg:grid-cols-[minmax(0,1.33fr)minmax(0,2fr)]"
     >
-      <h1 data-ignore-sizing class="text-xl lg:text-2xl">Nick Fuenmayor</h1>
+      <h1 data-component="me" data-ignore-sizing class="text-xl lg:text-2xl">
+        Nick Fuenmayor
+      </h1>
       <div data-component="section-name" class="hidden h-full md:block">
         <NavbarMarquee />
       </div>
     </div>
-    <div
-      data-component="cta-container"
-      class="aspect-square h-full overflow-hidden p-1"
-    >
+    <CtaContainer class="justify-self-end">
       <Button title="Contact" isLink href="#contact" class="h-full">
         <ContactIcon class="h-6 w-6" />
       </Button>
-    </div>
+    </CtaContainer>
   </Card>
 </div>
 
@@ -50,6 +54,12 @@ import NavbarMarquee from "./NavbarMarquee.astro";
     animation: navbar-entrance 1s ease-in-out forwards;
     animation-delay: 1.5s;
   }
+  [data-theme-context="nick"][data-theme="0"] [data-component="me"] {
+    transform: translateX(-0.25rem);
+  }
+  [data-theme-context="nick"][data-theme="1"] [data-component="me"] {
+    transform: translateX(-0.75rem);
+  }
 
   @media (width > 80rem) {
     [data-theme-context="nick"][data-theme="0"][data-theme-hue="350"]
@@ -59,7 +69,7 @@ import NavbarMarquee from "./NavbarMarquee.astro";
   }
 
   [data-theme-context="nick"][data-theme="0"] [data-component="navbar"] {
-    background-color: var(--color-ghost);
+    background-color: hsl(from var(--color-ghost) h s l / 50%);
   }
 
   [data-component="navbar-grid"] {

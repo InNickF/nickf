@@ -9,13 +9,13 @@ const props = Astro.props;
 ---
 
 <div
-  class="pointer-events-none absolute inset-x-6 inset-y-6 z-30 flex flex-col items-center justify-end lg:flex-row lg:items-center"
+  class="pointer-events-none absolute inset-x-6 inset-y-6 z-40 flex flex-col items-center justify-end lg:flex-row lg:items-center"
 >
   <Button
     size="large"
     id="reshape-btn"
-    intent="secondary"
-    class="pointer-events-auto mx-auto mb-2 lg:mt-34 lg:mb-0"
+    intent="invert"
+    class="pointer-events-auto mx-auto mb-2 overflow-hidden lg:mt-34 lg:mb-0"
     {...props}>Reshape</Button
   >
   <NavbarMarquee

@@ -1,21 +1,17 @@
+---
+const phrase =
+  "Technology is the first art form capable to reshape reality and empower innovation.";
+
+// Important space at the end of the word. And replace __ in case we want to animate groups of words.
+const words = phrase.split(" ").map((word) => `${word.replace("__", " ")} `);
+---
+
 <h3
   data-ignore-sizing
   data-component="page-title"
-  class="text-over-card relative z-10 mx-auto mt-24 mb-12 w-full p-4 text-center text-2xl text-balance md:w-3/4 md:p-0 md:text-4xl lg:w-2/3 xl:text-6xl"
+  class="text-over-card 3xl:text-6xl relative z-10 mx-auto mt-24 mb-12 w-full p-4 text-center text-2xl text-balance md:w-3/4 md:p-0 md:text-4xl lg:w-2/3 xl:text-5xl 2xl:text-6xl"
 >
-  <span class="hero-title to-animate">Technology</span>
-  <span class="hero-title to-animate">is</span>
-  <span class="hero-title to-animate">the</span>
-  <span class="hero-title to-animate">first</span>
-  <span class="hero-title to-animate">art</span>
-  <span class="hero-title to-animate">form</span>
-  <span class="hero-title to-animate">capable</span>
-  <span class="hero-title to-animate">to</span>
-  <span class="hero-title to-animate">reshape</span>
-  <span class="hero-title to-animate">reality</span>
-  <span class="hero-title to-animate">and</span>
-  <span class="hero-title to-animate">empower</span>
-  <span class="hero-title to-animate">emotions.</span>
+  {words.map((word) => <span class="hero-title to-animate">{word}</span>)}
 </h3>
 <style>
   .hero-title {
@@ -122,6 +118,8 @@
 
     const currentTheme = Number(themeContext.getAttribute("data-theme") || 0);
     const tl = currentTheme === 0 ? heroTlOne : heroTlTwo;
+    const lastTl = currentTheme === 0 ? heroTlTwo : heroTlOne;
+    lastTl.pause(0);
     tl.restart();
   };
   window.addEventListener("themeChanged", toggleAnimation);

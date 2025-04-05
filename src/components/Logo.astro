@@ -1,10 +1,12 @@
-<div
-  data-component="cta-container"
-  class="aspect-square h-full overflow-hidden p-1"
->
-  <div
+---
+import CtaContainer from "./general/CtaContainer.astro";
+---
+
+<CtaContainer>
+  <button
+    id="logo-btn"
     data-component="logo-wrapper"
-    class="bg-ghost relative aspect-square h-full w-full overflow-hidden"
+    class="bg-ghost relative aspect-square h-full w-full cursor-pointer overflow-hidden"
   >
     <svg
       data-component="logo"
@@ -15,31 +17,16 @@
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
+        class="transition-[fill] duration-300 ease-in-out"
         fill-rule="evenodd"
         clip-rule="evenodd"
         d="M0 0H148V148H0V0ZM95.9237 74H74V52.0763C74 64.1844 64.1844 74 52.0763 74H74V95.9237C74 83.8156 83.8156 74 95.9237 74Z"
         fill="var(--_logo-color)"></path>
     </svg>
-  </div>
-</div>
+  </button>
+</CtaContainer>
 
 <style is:global>
-  [data-component="cta-container"] {
-    --_logo-color: var(--color-primary);
-    border-radius: var(--border-radius-general);
-  }
-
-  [data-theme-context="nick"][data-theme="0"] {
-    [data-component="cta-container"] {
-      background-color: var(--_logo-color);
-    }
-  }
-
-  [data-theme-context="nick"][data-theme="1"] {
-    [data-component="cta-container"] {
-      background-color: transparent;
-    }
-  }
   [data-component="logo-wrapper"] {
     overflow: hidden;
     border-radius: var(--border-radius-general);
@@ -55,10 +42,44 @@
     left: 50%;
     will-change: transform;
   }
+
+  #logo-btn:hover [data-component="logo"] {
+    --_logo-color: hsl(from var(--color-primary) h s calc(l - 10));
+  }
+
+  #logo-btn:active [data-component="logo"] {
+    --_logo-color: hsl(from var(--color-primary) h s calc(l - 20));
+  }
+
+  [data-component="logo-wrapper"] > svg > path {
+    transform-origin: center center;
+    transition-property: rotate, scale, fill;
+    scale: 1;
+  }
+  [data-component="logo-wrapper"]:hover > svg > path {
+    scale: 1.2;
+    rotate: 0deg;
+  }
+  [data-component="logo-wrapper"]:active > svg > path {
+    transition-duration: 0.5s;
+    scale: 0.7;
+    rotate: 360deg;
+  }
 </style>
 <script>
-  const logo: SVGAElement = document.querySelector("#Logo")!;
+  import { throttleChangeTheme } from "@/utils";
 
+  const btn = document.querySelector("#logo-btn");
+  if (btn) {
+    btn.addEventListener("click", () => {
+      throttleChangeTheme();
+    });
+  }
+
+  /**
+   * * Rotate the logo based on scroll position.
+   */
+  const logo: SVGAElement = document.querySelector("#Logo")!;
   window.addEventListener("scroll", () => {
     const scrollTop = window.scrollY;
     const rotation = scrollTop * 0.5; // Adjust factor as needed

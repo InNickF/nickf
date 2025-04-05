@@ -16,7 +16,6 @@ import {
   EffectComposer,
   N8AO,
   Noise,
-  TiltShift2,
 } from "@react-three/postprocessing";
 import {
   BallCollider,
@@ -50,7 +49,7 @@ const shuffle = () => {
     { color: "#444", isSquared: isFirstTheme },
     { color: "#444", isSquared: isFirstTheme },
     { color: "#444", isSquared: isFirstTheme },
-    { color: "#fff", isSquared: isFirstTheme },
+    { color: "#444", isSquared: isFirstTheme },
     { color: "#fff", isSquared: isFirstTheme },
     { color: "#fff", isSquared: isFirstTheme },
     {
@@ -188,9 +187,9 @@ export function Scene({ className, ...props }: CanvasProps) {
           />
         </group>
       </Environment>
-      <EffectComposer multisampling={8}>
-        <N8AO distanceFalloff={1} aoRadius={1} intensity={4} />
-        <ChromaticAberration offset={[0.0005, 0.0005]} />
+      <EffectComposer multisampling={14}>
+        <N8AO distanceFalloff={10} aoRadius={10} intensity={8} />
+        <ChromaticAberration offset={[0.001, 0.001]} />
         <Noise premultiply />
       </EffectComposer>
     </Canvas>
