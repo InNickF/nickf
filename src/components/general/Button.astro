@@ -114,6 +114,11 @@ const classes = twMerge(button({ intent, size, disabled }), className);
     z-index: 1;
     inset: 0;
   }
+
+  [data-component="button"].bg-primary::after {
+    content: none;
+  }
+
   [data-theme-context="nick"][data-theme="1"] [data-component="button"]::after {
     transform: scale3d(0.88, 0.77, 1);
   }

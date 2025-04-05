@@ -30,7 +30,7 @@
   --saturation: 50%;
   --lightness: 80%;
   --color-text-color: hsl(calc(var(--hue)), 1%, 100%);
-  --color-ghost: hsl(calc(var(--hue)), 30%, 10%);
+  --color-ghost: hsl(calc(var(--hue)), 30%, 7%);
   --heading-font: var(--font-sans);
   --border-radius-general: --spacing(8);
   --color-secondary: hsl(calc(var(--hue)), 80%, 80%);

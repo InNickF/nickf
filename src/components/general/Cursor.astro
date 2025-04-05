@@ -1,12 +1,22 @@
 <span
   data-component="cursor"
+  style={{
+    transform: "translate3d(50dvw, -20px, 0)",
+  }}
   class="pointer-events-none fixed z-[51] hidden h-0 w-0 items-center justify-center overflow-visible lg:block"
 >
   <span
-    class="absolute block h-3 w-3 translate-x-[-50%] translate-y-[-50%] bg-[hsl(var(--color-primary)_h_s_l_/_70%)]"
+    class="absolute block h-4 w-4 translate-x-[-50%] translate-y-[-50%] bg-[hsl(var(--color-primary)_h_s_l_/_70%)]"
   ></span>
 </span>
 <style is:global>
+  [data-component="cursor"] {
+    will-change: transform;
+  }
+
+  [data-component="cursor"].active {
+    transition: transform 50ms ease;
+  }
   [data-component="cursor"] span {
     transition: transform 0.1s ease-in-out;
     transform: scale(1);
@@ -26,6 +36,8 @@
 
   body:has(button:hover, a:hover, .hoverable:hover, .cursor-pointer:hover)
     [data-component="cursor"] {
+    transition: transform 0.1s ease;
+
     span {
       transform: scale(2);
     }
@@ -43,17 +55,24 @@
   }
 </style>
 <script>
-  import { gsap } from "gsap";
+  const cursor = document.querySelector(
+    "[data-component='cursor']",
+  )! as HTMLElement;
+
+  let run = 0;
+
   const handleMouseMove = (e: MouseEvent) => {
     const x = e.clientX;
     const y = e.clientY;
-    const duration = 0.05;
-    gsap.quickTo(`[data-component="cursor"]`, "x", {
-      duration,
-    })(x);
-    gsap.quickTo(`[data-component="cursor"]`, "y", {
-      duration,
-    })(y);
+    cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+
+    // avoid first cursor appears animation
+    if (run >= 2 && !cursor.classList.contains("active")) {
+      cursor.classList.add("active");
+    }
+    if (run < 2) {
+      run++;
+    }
   };
 
   window.addEventListener("mousemove", handleMouseMove);
