@@ -8,18 +8,23 @@ export interface Props {
   titleClass?: string;
   animationDelay?: number;
   animationWithScroll?: boolean;
+  stickyTitle?: boolean;
 }
-
-const classes = twMerge(
+const isSticky = Astro.props.stickyTitle ?? true,
+  classes = twMerge(
     "grid grid-cols-1 grid-rows-[8rem_1fr] min-h-dvh relative",
     Astro.props.class,
   ),
-  bodyClasses = twMerge("z-0", Astro.props.bodyClass),
+  bodyClasses = twMerge("z-0 overflow-hidden", Astro.props.bodyClass),
   titleClasses = twMerge(
-    "mt-2 py-4 mb-auto mx-auto text-8xl sticky top-[calc(20dvh)] z-10 overflow-hidden",
+    "mt-2 py-6 mb-auto mx-auto text-8xl font-bold z-10 overflow-hidden px-24 text-balance",
+    isSticky ? "lg:sticky lg:top-[calc(8rem+2rem)] pb-96" : "",
     Astro.props.titleClass,
   ),
-  title = Astro.props.title.split(""),
+  hasSpaces = Astro.props.title.includes(" "),
+  title = hasSpaces
+    ? Astro.props.title.split(" ")
+    : Astro.props.title.split(""),
   secondsDelay = Astro.props.animationDelay ?? 0;
 ---
 
@@ -31,16 +36,21 @@ const classes = twMerge(
     data-animation-with-scroll={Astro.props.animationWithScroll ?? false}
   >
     {
-      title.map((word, i) => (
-        <span
-          class="translate-y-[140%]"
-          style={{
-            "--_i": i,
-          }}
-        >
-          {word}
-        </span>
-      ))
+      title.map((word, i, list) => {
+        const isLastWord = i === list.length - 1;
+        const needSpace = hasSpaces && !isLastWord;
+        return (
+          <span
+            class="translate-y-[140%]"
+            style={{
+              "--_i": i,
+            }}
+          >
+            {word}
+            {needSpace && <span>&nbsp;</span>}
+          </span>
+        );
+      })
     }
   </h3>
   <div class={bodyClasses}>
@@ -54,7 +64,16 @@ const classes = twMerge(
       mix-blend-mode: difference;
       span {
         display: inline-block;
-        filter: invert(100%);
+      }
+    }
+  }
+
+  [data-theme-context="nick"][data-theme="0"] {
+    [data-component="section"]:not([data-reset-title-styles="true"]) {
+      h3 {
+        span {
+          filter: invert(100%);
+        }
       }
     }
   }
@@ -89,8 +108,7 @@ const classes = twMerge(
     if (animationWithScroll) {
       animationConfig.scrollTrigger = {
         trigger: element,
-        start: "top 80%",
-        markers: true,
+        start: "20% 80%",
         toggleActions: "play none none reverse",
       };
     }

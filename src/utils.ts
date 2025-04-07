@@ -70,7 +70,6 @@ export function modifyHSL(
   );
   if (!match) {
     console.log(`Invalid HSL string: ${hslString}`);
-
     throw new Error("Invalid HSL format");
   }
 

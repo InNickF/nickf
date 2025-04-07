@@ -1,0 +1,114 @@
+---
+import Button from "@/components/general/Button.astro";
+import Card from "@/components/general/Card.astro";
+import type { Project } from "@/models/projects";
+import { Picture } from "astro:assets";
+import { twMerge } from "tailwind-merge";
+
+export interface Props {
+  project: Project;
+  class?: string;
+  titleClass?: string;
+}
+const project = Astro.props.project,
+  classes = twMerge(
+    "w-full h-full lg:min-w-lg 3xl:min-w-2xl p-4 text-left grid grid-cols-1 grid-rows-[auto_auto_1fr_auto] content-start gap-4",
+    Astro.props.class,
+  ),
+  titleClasses = twMerge("text-4xl", Astro.props.titleClass),
+  hasAdditionalLinks = !!project?.links?.length;
+---
+
+<Card data-animation="project" as="article">
+  <div data-component="project" class={classes}>
+    <Picture
+      format="webp"
+      src={project.cover}
+      alt={project.alt}
+      class="w-full object-cover"
+      loading="lazy"
+    />
+    <div class="grid grid-cols-1 gap-2 px-4">
+      <h4 data-ignore-sizing class={titleClasses}>
+        {project.title}
+        <small class="font-sans text-sm opacity-70">({project.date})</small>
+      </h4>
+      <p data-ignore-sizing class="-mb-2">
+        <strong>Role:</strong>
+        {project.role}.
+      </p>
+      <p data-ignore-sizing class="mb-2 text-base">
+        {project.description}
+      </p>
+      <small>
+        <strong>Stack:</strong>
+        {
+          project.technologies.map((tech, i, list) => {
+            const isLastItem = i === list.length - 1;
+            return (
+              <span class="text-opacity-70 font-sans text-sm">
+                {`${tech}${!isLastItem ? ", " : "."}`}
+              </span>
+            );
+          })
+        }</small
+      >
+    </div>
+    <div class="grid grid-cols-1 content-end px-4">
+      {
+        hasAdditionalLinks && (
+          <ul class="flex flex-wrap gap-4">
+            <p data-ignore-sizing class="-mr-2">
+              Additional Links:
+            </p>
+            {project?.links?.map((link) => (
+              <li>
+                <a
+                  data-ignore-sizing
+                  class="text-base underline"
+                  href={link.href}
+                  target="_blank"
+                >
+                  {link.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+    <Button class="py-3" isLink href={project.cto.href} target="_black">
+      {project.cto.text}
+    </Button>
+  </div>
+</Card>
+
+<style is:global>
+  [data-component="project"] {
+    picture {
+      --minus-padding: 0rem;
+      border-radius: calc(var(--border-radius-general) - var(--minus-padding));
+      overflow: hidden;
+    }
+    * {
+      text-wrap: balance;
+    }
+  }
+
+  [data-theme-context="nick"][data-theme="0"] {
+    [data-component="project"] {
+      background-color: hsl(from var(--color-primary) h s l / 5%);
+      &:hover {
+        background-color: hsl(from var(--color-primary) h s l / 10%);
+      }
+    }
+  }
+
+  [data-theme-context="nick"][data-theme="1"] {
+    [data-component="project"] {
+      picture {
+        --minus-padding: 1rem;
+      }
+    }
+  }
+</style>

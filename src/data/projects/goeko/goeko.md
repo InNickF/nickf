@@ -11,9 +11,8 @@ links:
     text: "Figma"
   - href: ""
     text: "Brand Presentation"
-cover:
-  src: "/assets/projects/goeko/cover.jpg"
-  alt: "Goeko | Project Cover"
+cover: "./cover2.jpg"
+alt: "Goeko | Project Cover"
 date: "2022"
 fields:
   - "UX/UI"

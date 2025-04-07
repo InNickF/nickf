@@ -1,5 +1,5 @@
 ---
-order: 12
+order: 11
 title: "B2W"
 role: "Brand Designer & Animator"
 description: "Business to World is a marketing company focus on digital strategy.
@@ -12,9 +12,8 @@ links:
     text: "Presentation"
   - href: "/docs/b2w-stationary.pdf" 
     text: "Stationary"
-cover:
-  src: "/assets/projects/b2w/cover.jpg"
-  alt: "Business to World | Project Cover"
+cover: "./cover2.jpg"
+alt: "Business to World | Project Cover"
 date: "2020"
 fields:
   - "Branding"

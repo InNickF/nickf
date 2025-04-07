@@ -9,10 +9,9 @@ cto:
 links:
   - href: "https://www.behance.net/gallery/90036551/Grupo-Vintimilla-UIUX-Design-Web-development"
     text: "Presentation"
-cover:
-  src: "/assets/projects/grupo-vintimilla/cover.webp"
-  alt: "Grupo Vintimilla | Project Cover"
-date: "2022"
+cover: "./cover2.jpg"
+alt: "Grupo Vintimilla | Project Cover"
+date: "2019"
 fields:
   - "UX/UI"
   - "Front-End"

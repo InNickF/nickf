@@ -1,3 +1,47 @@
 ---
+import { getCollection } from "astro:content";
+import ProjectCard from "./ProjectCard.astro";
 
+// ordering using order property in projects
+const projects = await getCollection("projects").then((projects) => {
+  return projects.sort((a, b) => {
+    return a.data.order - b.data.order;
+  });
+});
 ---
+
+{
+  projects.map((project) => {
+    return <ProjectCard project={project.data} />;
+  })
+}
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
+
+  const projectCards = Array.from(
+    document.querySelectorAll(
+      "[data-animation='project']",
+    ) as unknown as HTMLElement[],
+  );
+
+  gsap.fromTo(
+    projectCards,
+    {
+      opacity: 0,
+      scale: 0.8,
+    },
+    {
+      opacity: 1,
+      scale: 1,
+      stagger: 0.2,
+      scrollTrigger: {
+        trigger: projectCards,
+        start: "-20% 80%",
+        toggleActions: "play none none reverse",
+      },
+    },
+  );
+</script>

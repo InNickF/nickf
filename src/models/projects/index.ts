@@ -41,10 +41,7 @@ export const ProjectsSchema = z.object({
   role: z.string(),
   cto: LinkSchema, // Call to action
   links: z.array(LinkSchema).nullish(),
-  cover: z.object({
-    src: z.string(),
-    alt: z.string(),
-  }),
+  alt: z.string(),
   date: z.string(),
   fields: z.array(z.enum(AVAILABLE_FIELDS)),
   technologies: z.array(z.enum(AVAILABLE_TECHNOLOGIES)),
@@ -56,6 +53,14 @@ export const ProjectsSchema = z.object({
       }),
     )
     .nullish(),
+
+  // Cover will be replace for astro image schema
+  cover: z.object({
+    src: z.string(),
+    width: z.number(),
+    height: z.number(),
+    format: z.string(),
+  }),
 });
 
 export type Fields = z.infer<typeof ProjectsSchema>["fields"][number];
@@ -64,4 +69,6 @@ export type Technologies = z.infer<
   typeof ProjectsSchema
 >["technologies"][number];
 
-export type Project = z.infer<typeof ProjectsSchema>;
+export type Project = Omit<z.infer<typeof ProjectsSchema>, "cover"> & {
+  cover: ImageMetadata;
+};
