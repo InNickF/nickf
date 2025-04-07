@@ -35,6 +35,7 @@ export const LinkSchema = z.object({
 });
 
 export const ProjectsSchema = z.object({
+  order: z.number(),
   title: z.string(),
   description: z.string(),
   role: z.string(),
@@ -47,12 +48,14 @@ export const ProjectsSchema = z.object({
   date: z.string(),
   fields: z.array(z.enum(AVAILABLE_FIELDS)),
   technologies: z.array(z.enum(AVAILABLE_TECHNOLOGIES)),
-  images: z.array(
-    z.object({
-      src: z.string(),
-      alt: z.string(),
-    }),
-  ),
+  images: z
+    .array(
+      z.object({
+        src: z.string(),
+        alt: z.string(),
+      }),
+    )
+    .nullish(),
 });
 
 export type Fields = z.infer<typeof ProjectsSchema>["fields"][number];

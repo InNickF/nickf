@@ -1,4 +1,5 @@
 ---
+order: 7
 title: "Steelways"
 role: "Brand & UX/UI Designer"
 description: "

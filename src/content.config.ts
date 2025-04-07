@@ -9,3 +9,5 @@ const projects = defineCollection({
   }),
   schema: ProjectsSchema,
 });
+
+export const collections = { projects };

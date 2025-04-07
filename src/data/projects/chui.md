@@ -1,4 +1,5 @@
 ---
+order: 3
 title: "Credit Healing UI"
 role: "Front-End Leadership & UX/UI Designer"
 description: "

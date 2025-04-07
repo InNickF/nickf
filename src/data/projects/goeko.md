@@ -1,4 +1,5 @@
 ---
+order: 4
 title: "Goeko"
 description: "Branding and website design/development for Goeko Digital, a software development company specialized in web, mobile applications, infrastructure and A.I."
 role: "UX/UI Designer, Front-End Developer"
@@ -22,7 +23,7 @@ fields:
 technologies:
   - "Blender"
   - "React"
-  - "Next.js"
+  - "Next.JS"
   - "TailwindCSS"
   - "Figma"
   - "Illustrator"

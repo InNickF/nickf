@@ -1,4 +1,5 @@
 ---
+order: 1
 title: "I.R. Management"
 description: "
   A modern platform to manage the industrial real estate (I.R.) pipeline — from deal discovery and comparison to acquisition, asset management, debt tracking, and other tools with AI-powered features [A.I features are not available on the demo].[br]
@@ -25,7 +26,7 @@ technologies:
   - "TypeScript"
   - "Figma"
   - "React"
-  - "Next.js"
+  - "Next.JS"
   - "TailwindCSS"
   - "TurboRepo"
 ---

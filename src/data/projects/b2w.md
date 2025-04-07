@@ -1,4 +1,5 @@
 ---
+order: 12
 title: "B2W"
 role: "Brand Designer & Animator"
 description: "Business to World is a marketing company focus on digital strategy.

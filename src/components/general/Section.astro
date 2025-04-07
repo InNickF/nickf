@@ -1,0 +1,100 @@
+---
+import { twMerge } from "tailwind-merge";
+
+export interface Props {
+  title: string;
+  class?: string;
+  bodyClass?: string;
+  titleClass?: string;
+  animationDelay?: number;
+  animationWithScroll?: boolean;
+}
+
+const classes = twMerge(
+    "grid grid-cols-1 grid-rows-[8rem_1fr] min-h-dvh relative",
+    Astro.props.class,
+  ),
+  bodyClasses = twMerge("z-0", Astro.props.bodyClass),
+  titleClasses = twMerge(
+    "mt-2 py-4 mb-auto mx-auto text-8xl sticky top-[calc(20dvh)] z-10 overflow-hidden",
+    Astro.props.titleClass,
+  ),
+  title = Astro.props.title.split(""),
+  secondsDelay = Astro.props.animationDelay ?? 0;
+---
+
+<section data-component="section" id={Astro.props.title} class={classes}>
+  <h3
+    data-ignore-sizing
+    class={titleClasses}
+    data-delay={secondsDelay}
+    data-animation-with-scroll={Astro.props.animationWithScroll ?? false}
+  >
+    {
+      title.map((word, i) => (
+        <span
+          class="translate-y-[140%]"
+          style={{
+            "--_i": i,
+          }}
+        >
+          {word}
+        </span>
+      ))
+    }
+  </h3>
+  <div class={bodyClasses}>
+    <slot />
+  </div>
+</section>
+
+<style is:global>
+  [data-component="section"]:not([data-reset-title-styles="true"]) {
+    h3 {
+      mix-blend-mode: difference;
+      span {
+        display: inline-block;
+        filter: invert(100%);
+      }
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/all";
+  gsap.registerPlugin(ScrollTrigger);
+  const titles = Array.from(
+    document.querySelectorAll(
+      `[data-component="section"] h3`,
+    ) as unknown as HTMLHeadingElement[],
+  );
+
+  titles.forEach((element) => {
+    const delay = Number(element?.dataset?.delay) ?? 0;
+    const animationWithScroll =
+      element?.dataset?.animationWithScroll === "true";
+    const words = element.querySelectorAll("span");
+    const animationConfig: gsap.TweenVars = {
+      y: 0,
+      stagger: {
+        each: 0.03,
+        from: "edges",
+      },
+      duration: 0.5,
+      delay,
+      ease: "power2.inOut",
+    };
+
+    if (animationWithScroll) {
+      animationConfig.scrollTrigger = {
+        trigger: element,
+        start: "top 80%",
+        markers: true,
+        toggleActions: "play none none reverse",
+      };
+    }
+
+    gsap.to(words, animationConfig);
+  });
+</script>

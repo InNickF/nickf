@@ -1,4 +1,5 @@
 ---
+order: 5
 title: "Armario Movil"
 role: "Project Manager, Front-End Developer & UX/UI Designer"
 description: "
@@ -20,7 +21,7 @@ fields:
   - "Animation"
 technologies:
   - "Laravel"
-  - "Vue"
+  - "VueJS"
   - "PHP"
   - "Photoshop"
   - "Illustrator"

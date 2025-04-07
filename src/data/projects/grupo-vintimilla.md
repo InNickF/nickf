@@ -1,4 +1,5 @@
 ---
+order: 6
 title: "Grupo Vintimilla"
 description: "UX/UI design and website development for a real estate company in Ecuador with more than 55 year of experience. The project involved creating a modern and user-friendly interface that showcases the company's properties and services."
 role: "UI/UX Designer & Front-End Developer"

@@ -164,7 +164,8 @@ const classes = twMerge(button({ intent, size, disabled }), className);
     }
 
     100% {
-      backdrop-filter: invert(100%) blur(2.33px) hue-rotate(360deg);
+      backdrop-filter: invert(100%) blur(2.33px) hue-rotate(360deg)
+        grayscale(0.33);
       background-color: hsl(from var(--color-secondary) h s l / 30%);
     }
   }

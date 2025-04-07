@@ -1,4 +1,5 @@
 ---
+order: 10
 title: "Quicentro (DK Management)"
 role: "UX/UI Designer"
 description: "

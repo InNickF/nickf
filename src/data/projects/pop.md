@@ -1,4 +1,5 @@
 ---
+order: 9
 title: "Pop"
 role: "Brand & UX/UI Designer"
 description: "
