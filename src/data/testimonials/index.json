@@ -1,41 +1,48 @@
 [
   {
+    "id": "jb",
     "name": "Jesus Blanco",
     "linkedinURL": "https://www.linkedin.com/in/jesus-blanco-08682112a/",
     "text": "I worked directly with Nick on the Frontend team for five years, and it has been one of the most enriching experiences of my professional career. He always has proposals and solutions tailored to the challenges at hand. His deep knowledge of JavaScript fundamentals and creativity combine to produce really high-quality products, both visually and in code.",
     "cover": "./jb.jpg"
   },
   {
+    "id": "gabby",
     "name": "Gabriela Parra",
-    "cover": "./habby.jpg",
+    "cover": "./gabby.jpg",
     "linkedinURL": "https://www.linkedin.com/in/gabrielaparramaschio/",
     "text": "Working with Nick is comforting — he creates an environment that flows as naturally as water. Even in the stormiest moments, he finds a way to lift you up. More than that, he makes you feel deeply, and in calmer times, helps you grow as a person."
   },
   {
+    "id": "dv",
     "name": "David Vaisberg",
     "cover": "./david.jpg",
     "linkedinURL": "https://www.linkedin.com/in/david-vaisberg/",
-    "text": "Lorem Ipsum."
+    "text": "I had the pleasure of working closely with Nick as our Lead Product Designer. He is a tremendous professional whose impact is felt every day. Nick is a great designer, but more importantly an exceptional thinker. [...].Working with Nick is a rare and enriching experience, and anyone who has the opportunity to collaborate with him will benefit from his expertise, leadership, and passion for excellence. "
   },
   {
+    "id": "mw",
     "name": "Milton Weinhold",
     "cover": "./milton.jpg",
     "linkedinURL": "https://www.linkedin.com/in/milton-weinhold/",
     "text": "Lorem Ipsum."
   },
   {
+    "id": "fede",
     "name": "Federico Benavidez",
     "cover": "./fede.jpg",
     "linkedinURL": "https://www.linkedin.com/in/fedebenavidez/",
-    "text": "Lorem Ipsum."
+    "text": "I worked with Nick in a tech team where he was leading frontend-related projects and efforts. I've had foundational knowledge on development back then, yet I insisted on getting more hands-on experience on some topics. That's when I saw Nicks potential: he's smart, calm, and takes good decisions in terms of system design and well-structured patterns; knows how to transfer knowledge, tackle issues and collaborate with other engineers to generate value (and real results!)."
   },
   {
+    "id": "jared",
     "name": "Jared Stufft",
     "cover": "./jared.jpg",
     "linkedinURL": "https://www.linkedin.com/in/jaredstufft/",
     "text": "Lorem Ipsum."
   },
   {
+    "id": "adrian",
     "name": "Adrian Villasmil",
     "linkedinURL": "https://www.linkedin.com/in/adrian-villasmil-brice%C3%B1o-7466b6149/",
     "cover": "./adrian.jpg",

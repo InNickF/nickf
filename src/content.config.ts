@@ -20,11 +20,9 @@ const testimonials = defineCollection({
     parser: (text: string) => JSON.parse(text),
   }),
   schema: ({ image }) =>
-    z.array(
-      TestimonialSchema.extend({
-        cover: image(),
-      }),
-    ),
+    TestimonialSchema.extend({
+      cover: image(),
+    }),
 });
 
 const QAndA = defineCollection({
