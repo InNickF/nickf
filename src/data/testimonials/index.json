@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Jesus Blanco",
+    "linkedinURL": "https://www.linkedin.com/in/jesus-blanco-08682112a/",
+    "text": "I worked directly with Nick on the Frontend team for five years, and it has been one of the most enriching experiences of my professional career. He always has proposals and solutions tailored to the challenges at hand. His deep knowledge of JavaScript fundamentals and creativity combine to produce really high-quality products, both visually and in code.",
+    "cover": "./jb.jpg"
+  },
+  {
+    "name": "Gabriela Parra",
+    "cover": "./habby.jpg",
+    "linkedinURL": "https://www.linkedin.com/in/gabrielaparramaschio/",
+    "text": "Working with Nick is comforting — he creates an environment that flows as naturally as water. Even in the stormiest moments, he finds a way to lift you up. More than that, he makes you feel deeply, and in calmer times, helps you grow as a person."
+  },
+  {
+    "name": "David Vaisberg",
+    "cover": "./david.jpg",
+    "linkedinURL": "https://www.linkedin.com/in/david-vaisberg/",
+    "text": "Lorem Ipsum."
+  },
+  {
+    "name": "Milton Weinhold",
+    "cover": "./milton.jpg",
+    "linkedinURL": "https://www.linkedin.com/in/milton-weinhold/",
+    "text": "Lorem Ipsum."
+  },
+  {
+    "name": "Federico Benavidez",
+    "cover": "./fede.jpg",
+    "linkedinURL": "https://www.linkedin.com/in/fedebenavidez/",
+    "text": "Lorem Ipsum."
+  },
+  {
+    "name": "Jared Stufft",
+    "cover": "./jared.jpg",
+    "linkedinURL": "https://www.linkedin.com/in/jaredstufft/",
+    "text": "Lorem Ipsum."
+  },
+  {
+    "name": "Adrian Villasmil",
+    "linkedinURL": "https://www.linkedin.com/in/adrian-villasmil-brice%C3%B1o-7466b6149/",
+    "cover": "./adrian.jpg",
+    "text": "Working with Nick is an enriching experience that fosters mutual growth and a deeper understanding of the project. His approach is centered on truly listening to and understanding the client, allowing him to communicate the best ideas clearly and effectively while achieving goals on time."
+  }
+]

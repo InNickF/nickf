@@ -1,7 +1,8 @@
-import { defineCollection } from "astro:content";
-import { glob } from "astro/loaders";
+import { file, glob } from "astro/loaders";
+import { defineCollection, z } from "astro:content";
 import { ProjectsSchema } from "./models/projects";
-import type { z } from "astro:schema";
+import { QAndASchema } from "./models/QAndA";
+import { TestimonialSchema } from "./models/testimonials";
 
 const projects = defineCollection({
   loader: glob({
@@ -14,4 +15,24 @@ const projects = defineCollection({
     }),
 });
 
-export const collections = { projects };
+const testimonials = defineCollection({
+  loader: file("src/data/testimonials/index.json", {
+    parser: (text: string) => JSON.parse(text),
+  }),
+  schema: ({ image }) =>
+    z.array(
+      TestimonialSchema.extend({
+        cover: image(),
+      }),
+    ),
+});
+
+const QAndA = defineCollection({
+  loader: glob({
+    pattern: ["**/*.md"],
+    base: "src/data/QandA",
+  }),
+  schema: ({ image }) => QAndASchema,
+});
+
+export const collections = { projects, testimonials, QAndA };
