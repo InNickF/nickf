@@ -43,14 +43,9 @@ const isSticky = Astro.props.stickyTitle ?? true,
         const isLastWord = i === list.length - 1;
         const needSpace = hasSpaces && !isLastWord;
         return (
-          <span
-            class="translate-y-[140%] opacity-0"
-            style={{
-              "--_i": i,
-            }}
-          >
+          <span class="opacity-0">
             {word}
-            {needSpace && " "}
+            {needSpace && <span />}
           </span>
         );
       })
@@ -63,17 +58,22 @@ const isSticky = Astro.props.stickyTitle ?? true,
 </section>
 
 <style is:global>
-  [data-component="section"]:not([data-reset-title-styles="true"]) {
-    h3.able-to-stick {
-      mix-blend-mode: difference;
+  [data-component="section"] {
+    h3 {
       span {
         display: inline-block;
       }
     }
   }
 
+  [data-component="section"] {
+    h3.able-to-stick {
+      mix-blend-mode: difference;
+    }
+  }
+
   [data-theme-context="nick"][data-theme="0"] {
-    [data-component="section"]:not([data-reset-title-styles="true"]) {
+    [data-component="section"] {
       h3.able-to-stick {
         span {
           filter: invert(100%);
@@ -124,7 +124,7 @@ const isSticky = Astro.props.stickyTitle ?? true,
     }
 
     setTimeout(() => {
-      gsap.fromTo(words, { y: -140 }, animationConfig);
+      gsap.fromTo(words, { y: 140 }, animationConfig);
     }, 50); // Help to avoid gsap triggers bad location due to projects animation scroll
   });
 </script>

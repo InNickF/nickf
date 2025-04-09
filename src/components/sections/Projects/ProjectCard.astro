@@ -19,7 +19,7 @@ const project = Astro.props.project,
   hasAdditionalLinks = !!project?.links?.length;
 ---
 
-<Card data-animation="project" as="article" animationWithScroll>
+<Card data-animation="project" animationWithScroll>
   <div data-component="project" class={classes}>
     <Picture
       format="webp"
@@ -28,7 +28,7 @@ const project = Astro.props.project,
       class="w-full object-cover"
       loading="lazy"
     />
-    <div class="grid grid-cols-1 gap-2 px-8">
+    <div class="grid grid-cols-1 gap-2 px-6">
       <h4 data-ignore-sizing class={titleClasses}>
         {project.title}
         <small class="font-sans text-sm opacity-70">({project.date})</small>
@@ -53,7 +53,7 @@ const project = Astro.props.project,
         }</small
       >
     </div>
-    <div class="grid grid-cols-1 content-end px-8">
+    <div class="grid grid-cols-1 content-end px-6">
       {
         hasAdditionalLinks && (
           <ul class="flex flex-wrap gap-4">

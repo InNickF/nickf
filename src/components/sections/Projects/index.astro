@@ -6,7 +6,7 @@ import ProjectsList from "./ProjectsList.astro";
 <Section
   class="mt-14"
   titleClass="-mt-12 "
-  bodyClass="horizontal-scroll-animation grid grid-cols-1 lg:flex lg:flew-wrap lg:flex-nowrap gap-8 px-8 lg:px-12 pb-4 3xl:pb-18 max-h-calc(100dvh-8rem) 3xl:max-h-calc(100dvh-8rem) lg:pl-24"
+  bodyClass="horizontal-scroll-animation grid grid-cols-1 lg:flex lg:flew-wrap lg:flex-nowrap gap-8 px-6 lg:px-12 pb-4 3xl:pb-18 max-h-calc(100dvh-8rem) 3xl:max-h-calc(100dvh-8rem) lg:pl-24"
   title="projects"
   animationDelay={2}
 >
@@ -17,7 +17,7 @@ import ProjectsList from "./ProjectsList.astro";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   gsap.registerPlugin(ScrollTrigger);
   const articles = document.querySelectorAll(
-    ".horizontal-scroll-animation > article",
+    ".horizontal-scroll-animation > [data-animation='project']",
   ) as unknown as HTMLElement[];
 
   const wrapper = document.querySelector(
@@ -27,7 +27,7 @@ import ProjectsList from "./ProjectsList.astro";
   const mm = gsap.matchMedia();
 
   mm.add("(min-width: 1024px)", () => {
-    gsap.to(".horizontal-scroll-animation > article", {
+    gsap.to(".horizontal-scroll-animation > [data-animation='project']", {
       xPercent: -100 * (articles.length - 1.5),
       ease: "none",
       scrollTrigger: {
