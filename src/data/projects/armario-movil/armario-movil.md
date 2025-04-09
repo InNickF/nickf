@@ -1,7 +1,7 @@
 ---
 order: 5
 title: "Armario Movil"
-role: "Project Manager, Product Designer & Front-End Developer"
+role: "Project Manager, Product Designer & Front-End Dev"
 description: "
   The first fashion e-commerce platform in Ecuador, designed to empower users to create and manage their own online stores.
   The system included integrated payments, shipping logistics, personalized dashboards with analytics, and a complete backoffice for platform management."

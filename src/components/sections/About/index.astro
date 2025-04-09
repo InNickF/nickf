@@ -1,18 +1,36 @@
-<section
-  class="bg-secondary text-over-secondary grid grid-cols-1 gap-4 p-24 text-balance"
+---
+import Section from "@/components/general/Section.astro";
+---
+
+<Section
+  class="bg-secondary text-over-secondary grid grid-cols-1 items-start justify-items-start gap-4 p-4 text-left text-balance lg:p-24"
+  title="Design, Code & a Bit of Me"
+  titleClass="text-left text-7xl mr-auto w-full"
+  customGridRows="grid-rows-[min-content]"
+  animationWithScroll
+  stickyTitle={false}
 >
-  <h4 data-ignore-sizing class="text-7xl font-bold">
-    Design, Code & a Bit of Me
-  </h4>
-  <p class="lg:max-w-3/4">
+  <p class="mb-4 lg:max-w-3/4">
     Product Designer & Full-Stack Developer with over 8 years of experience
-    creating innovative digital products, libraries, and web applications from
-    the ground up. I believe technology goes beyond tools—it's a creative
-    language capable of generating emotion, connection, and transformation.
-    Self-taught and endlessly curious, I often explore disciplines beyond
-    coding—such as visual design, creative coding, and generative arts—always
-    seeking deeper meaning and impactful experiences. My core principle: combine
-    strategy, creativity, science, and code to build products that resonate and
-    leave a lasting impression.
+    creating digital products, libraries, and web applications from the ground
+    up. I believe technology goes beyond tools—it's a creative language capable
+    of generating emotion, connection, and transformation.
   </p>
-</section>
+  <p class="mb-4 lg:max-w-3/4">
+    Self-taught and endlessly curious, I often explore disciplines beyond
+    product/software development—such as visual design, creative coding, and
+    generative arts—always seeking deeper meaning and impactful experiences. My
+    core principle: combine strategy, creativity, science, and code to build
+    products that resonate and leave a lasting impact.
+  </p>
+  <div class="grid grid-cols-1 gap-6 py-8">
+    <h4 data-ignore-sizing class="text-7xl font-bold">Want to talk?</h4>
+    <p>
+      <a
+        data-ignore-sizing
+        href="mailto:contact@nickf.info"
+        class="text-5xl hover:underline">— contact@nickf.info</a
+      >
+    </p>
+  </div>
+</Section>

@@ -1,0 +1,132 @@
+---
+import { Image } from "astro:assets";
+import Image1 from "@/assets/trail-images/1.jpg";
+import Image2 from "@/assets/trail-images/2.jpg";
+import Image3 from "@/assets/trail-images/3.jpg";
+import Image4 from "@/assets/trail-images/4.jpg";
+import Image5 from "@/assets/trail-images/5.webp";
+import Image6 from "@/assets/trail-images/6.webp";
+import Image7 from "@/assets/trail-images/7.webp";
+import Image8 from "@/assets/trail-images/8.webp";
+import Image9 from "@/assets/trail-images/9.webp";
+import Image10 from "@/assets/trail-images/10.webp";
+import Image11 from "@/assets/trail-images/11.webp";
+import Image12 from "@/assets/trail-images/12.webp";
+import Image13 from "@/assets/trail-images/13.webp";
+import Image14 from "@/assets/trail-images/14.webp";
+
+const images = [
+  Image1,
+  Image2,
+  Image3,
+  Image4,
+  Image5,
+  Image6,
+  Image7,
+  Image8,
+  Image9,
+  Image10,
+  Image11,
+  Image12,
+  Image13,
+  Image14,
+];
+---
+
+<div data-component="trail" class="absolute inset-0 z-10 overflow-hidden">
+  {
+    images.map((image) => {
+      return (
+        <Image
+          aria-hidden="true"
+          class="pointer-events-none absolute h-48 w-48 scale-0 object-cover transition-[opacity,scale] duration-300 ease-in-out"
+          src={image}
+          alt="Trail image"
+          width={300}
+        />
+      );
+    })
+  }
+  {
+    Array.from({ length: 8 }).map(() =>
+      images.map((image) => {
+        return (
+          <Image
+            aria-hidden="true"
+            format="webp"
+            aria-hidden="true"
+            class="pointer-events-none absolute h-48 w-48 scale-0 object-cover transition-[opacity,scale] duration-300 ease-in-out"
+            src={image}
+            alt="Trail image"
+            width={200}
+          />
+        );
+      }),
+    )
+  }
+</div>
+
+<style is:global>
+  [data-component="trail"] {
+    img {
+      border-radius: var(--border-radius-general);
+    }
+  }
+</style>
+
+<script>
+  import { throttle } from "@/utils";
+  import gsap from "gsap";
+
+  const trailContainer = document.querySelector("[data-component='trail']");
+  const images = trailContainer!.querySelectorAll("img");
+
+  const imageCount = images.length;
+  let currentIndex = 0;
+  const showImage = ({
+    index,
+    mouseX,
+    mouseY,
+  }: {
+    index: number;
+    mouseX: number;
+    mouseY: number;
+  }) => {
+    gsap.to(images[index], {
+      onStart: () => {
+        gsap.set(images[index], {
+          scale: 0,
+          rotate: 0,
+          left: mouseX,
+          top: mouseY,
+        });
+      },
+      scale: 1,
+      rotate: "random(-25, 25)",
+      duration: 0.5,
+      onComplete: () => {
+        gsap.to(images[index], {
+          delay: 0.5,
+          scale: 0,
+          duration: 0.5,
+        });
+      },
+    });
+    const nextIndex = index + 1;
+    currentIndex = imageCount === nextIndex ? 14 : nextIndex;
+  };
+
+  const throttledShowImage = throttle(showImage, 250);
+
+  trailContainer?.addEventListener("mousemove", (event) => {
+    const rect = trailContainer.getBoundingClientRect();
+    const x = (event as MouseEvent).clientX - rect.left;
+    const y = (event as MouseEvent).clientY - rect.top;
+
+    throttledShowImage({
+      index: currentIndex,
+      mouseX: x - 192 / 2,
+      mouseY: y - 192 / 2,
+    });
+  });
+</script>

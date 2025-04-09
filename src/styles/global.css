@@ -27,7 +27,7 @@
 }
 
 ::selection {
-  background-color: var(--color-primary);
+  background-color: hsl(from var(--color-primary) h s calc(l - 10));
   color: var(--color-over-primary);
 }
 
@@ -38,7 +38,7 @@
 *,
 *::before,
 *::after {
-  transition-property: background-color, opacity, color, border-radius;
+  transition-property: background-color, opacity, border-radius;
   transition-duration: 0.25s;
   transition-timing-function: ease-in-out;
 }

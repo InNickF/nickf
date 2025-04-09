@@ -33,7 +33,10 @@ export const repaintingForIOSUsers = () => {
   }, 0);
 };
 
-function throttle<T extends (...args: any[]) => void>(fn: T, delay: number): T {
+export function throttle<T extends (...args: any[]) => void>(
+  fn: T,
+  delay: number,
+): T {
   let lastCall = 0;
 
   return function (...args: Parameters<T>) {

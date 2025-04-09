@@ -9,7 +9,7 @@ const words = phrase.split(" ").map((word) => `${word.replace("__", " ")} `);
 <h3
   data-ignore-sizing
   data-component="page-title"
-  class="text-over-card 3xl:text-6xl relative z-10 mx-auto mt-24 mb-12 w-full p-4 text-center text-2xl text-balance md:w-3/4 md:p-0 md:text-4xl lg:w-2/3 xl:text-5xl 2xl:text-6xl"
+  class="text-over-card 3xl:text-6xl relative z-30 mx-auto mt-24 mb-12 w-full p-4 text-center text-2xl text-balance md:w-3/4 md:p-0 md:text-4xl lg:w-2/3 xl:text-5xl 2xl:text-6xl"
 >
   {words.map((word) => <span class="hero-title to-animate">{word}</span>)}
 </h3>
@@ -24,9 +24,9 @@ const words = phrase.split(" ").map((word) => `${word.replace("__", " ")} `);
   [data-component="page-title"]::before,
   [data-component="page-title"]::after {
     position: absolute;
-    font-size: 1000%;
+    font-size: 500%;
     opacity: 0.1;
-    top: -70%;
+    top: -30%;
     color: var(--color-over-card);
   }
 
@@ -39,26 +39,17 @@ const words = phrase.split(" ").map((word) => `${word.replace("__", " ")} `);
     right: 20%;
   }
 
-  @media (width >= 80rem) /** XL */ {
-    [data-component="page-title"]::before {
-      left: -10%;
-    }
-    [data-component="page-title"]::after {
-      right: -10%;
-    }
-  }
-
   @media (width >= 96rem) /** 2XL */ {
     [data-component="page-title"]::before,
     [data-component="page-title"]::after {
-      top: -100%;
+      top: -70%;
     }
 
     [data-component="page-title"]::before {
-      left: 10%;
+      left: 0%;
     }
     [data-component="page-title"]::after {
-      right: 10%;
+      right: 0%;
     }
   }
 </style>

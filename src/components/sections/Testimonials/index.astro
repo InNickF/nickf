@@ -1,18 +1,20 @@
 ---
 import Section from "@/components/general/Section.astro";
 import TestimonialsMarquee from "./TestimonialsMarquee.astro";
+import Trail from "./Trail.astro";
 ---
 
 <Section
-  class="mt-14 min-h-[60dvh]"
-  title="They came for code, stayed for the vibes."
-  bodyClass="testimonials-marquee-wrapper flex flex-nowrap gap-12 p-6"
-  titleClass="text-left text-7xl mr-auto px-4 lg:px-24"
+  class="min-h-[90dvh] pt-24 pb-6"
+  title="They came for code, stayed for the vibes"
+  bodyClass="testimonials-marquee-wrapper flex flex-nowrap gap-12 p-6 lg:pb-60 relative pointer-events-none z-20"
+  titleClass="text-left text-7xl mr-auto px-8 lg:px-24 pt-42"
   animationWithScroll
   customGridRows="grid-rows-[min-content]"
   stickyTitle={false}
 >
   <TestimonialsMarquee />
+  <Trail slot="after-body" />
 </Section>
 
 <style is:global>
@@ -21,5 +23,6 @@ import TestimonialsMarquee from "./TestimonialsMarquee.astro";
   }
   .testimonials-marquee-wrapper:has([data-component="testimonial"]:hover) {
     --animation-state: paused;
+    z-index: 20;
   }
 </style>

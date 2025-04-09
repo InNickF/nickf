@@ -21,7 +21,7 @@ const isSticky = Astro.props.stickyTitle ?? true,
   bodyClasses = twMerge("z-0 overflow-hidden", Astro.props.bodyClass),
   titleClasses = twMerge(
     "mt-2 py-6 mb-auto mx-auto text-8xl font-bold z-10 overflow-hidden text-balance pointer-events-none",
-    isSticky ? "lg:sticky lg:top-[calc(8rem+2rem)] pb-96" : "",
+    isSticky ? "lg:sticky lg:top-[calc(8rem+2rem)] pb-96 able-to-stick" : "",
     Astro.props.titleClass,
   ),
   hasSpaces = Astro.props.title.includes(" "),
@@ -50,7 +50,7 @@ const isSticky = Astro.props.stickyTitle ?? true,
             }}
           >
             {word}
-            {needSpace && <span>&nbsp;</span>}
+            {needSpace && " "}
           </span>
         );
       })
@@ -59,11 +59,12 @@ const isSticky = Astro.props.stickyTitle ?? true,
   <div class={bodyClasses}>
     <slot />
   </div>
+  <slot name="after-body" />
 </section>
 
 <style is:global>
   [data-component="section"]:not([data-reset-title-styles="true"]) {
-    h3 {
+    h3.able-to-stick {
       mix-blend-mode: difference;
       span {
         display: inline-block;
@@ -73,7 +74,7 @@ const isSticky = Astro.props.stickyTitle ?? true,
 
   [data-theme-context="nick"][data-theme="0"] {
     [data-component="section"]:not([data-reset-title-styles="true"]) {
-      h3 {
+      h3.able-to-stick {
         span {
           filter: invert(100%);
         }
@@ -97,6 +98,7 @@ const isSticky = Astro.props.stickyTitle ?? true,
     const animationWithScroll =
       element?.dataset?.animationWithScroll === "true";
     const words = element.querySelectorAll("span");
+
     const animationConfig: gsap.TweenVars = {
       y: 0,
       stagger: {
@@ -121,6 +123,8 @@ const isSticky = Astro.props.stickyTitle ?? true,
       };
     }
 
-    gsap.to(words, animationConfig);
+    setTimeout(() => {
+      gsap.fromTo(words, { y: -140 }, animationConfig);
+    }, 50); // Help to avoid gsap triggers bad location due to projects animation scroll
   });
 </script>

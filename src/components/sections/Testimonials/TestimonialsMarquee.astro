@@ -9,7 +9,8 @@ const projects = await getCollection("testimonials"),
     (project) => !hiddenPersons.includes(project.data.name),
   ),
   cardClasses =
-    "w-full lg:min-w-lg 3xl:min-w-2xl p-4 cursor-pointer grid grid-rows-[max-content] gap-2 lg:min-h-[290px] justify-items-start items-start";
+    "pointer-events-auto w-full lg:min-w-lg 3xl:min-w-2xl p-8 cursor-pointer grid grid-rows-[max-content] gap-2 lg:min-h-[290px] justify-items-start items-start",
+  imageSize = 70;
 ---
 
 <div
@@ -30,11 +31,14 @@ const projects = await getCollection("testimonials"),
           <Image
             src={testimonial.data.cover}
             alt={testimonial.data.name}
-            class="rounded-[var(--border-radius-general)]"
-            width={50}
-            height={50}
+            class="border-primary rounded-[var(--border-radius-general)] border-3"
+            width={imageSize}
+            height={imageSize}
           />
-          <h6>{testimonial.data.name}</h6>
+          <div>
+            <h6>{testimonial.data.name}</h6>
+            <small class="underline">LinkedIn</small>
+          </div>
         </header>
         <p data-ignore-sizing class="text-base">
           {testimonial.data.text}
@@ -49,6 +53,7 @@ const projects = await getCollection("testimonials"),
   {
     visiblePersons.map((testimonial) => (
       <Card
+        aria-hidden="true"
         animationWithScroll
         data-component="testimonial"
         class={cardClasses}
@@ -61,11 +66,14 @@ const projects = await getCollection("testimonials"),
           <Image
             src={testimonial.data.cover}
             alt={testimonial.data.name}
-            class="rounded-[var(--border-radius-general)]"
-            width={50}
-            height={50}
+            class="border-primary rounded-[var(--border-radius-general)] border-3"
+            width={imageSize}
+            height={imageSize}
           />
-          <h6>{testimonial.data.name}</h6>
+          <div>
+            <h6>{testimonial.data.name}</h6>
+            <small class="underline">LinkedIn</small>
+          </div>
         </header>
         <p data-ignore-sizing class="text-base">
           {testimonial.data.text}
@@ -82,7 +90,7 @@ const projects = await getCollection("testimonials"),
   }
 
   .testimonials-marquee {
-    --_gap: 2rem;
+    --_gap: 3rem;
     --_time: 24s;
     user-select: none;
     animation-play-state: var(--animation-state);

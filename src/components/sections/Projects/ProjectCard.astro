@@ -28,13 +28,12 @@ const project = Astro.props.project,
       class="w-full object-cover"
       loading="lazy"
     />
-    <div class="grid grid-cols-1 gap-2 px-4">
+    <div class="grid grid-cols-1 gap-2 px-8">
       <h4 data-ignore-sizing class={titleClasses}>
         {project.title}
         <small class="font-sans text-sm opacity-70">({project.date})</small>
       </h4>
-      <p data-ignore-sizing class="-mb-2">
-        <strong>Role:</strong>
+      <p data-ignore-sizing class="-mt-1 mb-1 italic">
         {project.role}.
       </p>
       <p data-ignore-sizing class="mb-2 text-base">
@@ -54,7 +53,7 @@ const project = Astro.props.project,
         }</small
       >
     </div>
-    <div class="grid grid-cols-1 content-end px-4">
+    <div class="grid grid-cols-1 content-end px-8">
       {
         hasAdditionalLinks && (
           <ul class="flex flex-wrap gap-4">
