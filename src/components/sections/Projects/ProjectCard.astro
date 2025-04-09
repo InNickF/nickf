@@ -19,7 +19,7 @@ const project = Astro.props.project,
   hasAdditionalLinks = !!project?.links?.length;
 ---
 
-<Card data-animation="project" as="article">
+<Card data-animation="project" as="article" animationWithScroll>
   <div data-component="project" class={classes}>
     <Picture
       format="webp"

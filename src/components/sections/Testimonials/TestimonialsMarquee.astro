@@ -1,0 +1,117 @@
+---
+import Card from "@/components/general/Card.astro";
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+
+const projects = await getCollection("testimonials"),
+  hiddenPersons = ["Jared Stufft", "Milton Weinhold"],
+  visiblePersons = projects.filter(
+    (project) => !hiddenPersons.includes(project.data.name),
+  ),
+  cardClasses =
+    "w-full lg:min-w-lg 3xl:min-w-2xl p-4 cursor-pointer grid grid-rows-[max-content] gap-2 lg:min-h-[290px] justify-items-start items-start";
+---
+
+<div
+  class="testimonials-marquee grid grid-flow-row items-center gap-12 overflow-visible text-left lg:grid-flow-col"
+>
+  {
+    visiblePersons.map((testimonial) => (
+      <Card
+        animationWithScroll
+        data-component="testimonial"
+        class={cardClasses}
+        target="_blank"
+        rel="noopener"
+        as="a"
+        href={testimonial.data.linkedinURL}
+      >
+        <header class="grid grid-flow-col items-center justify-start gap-2 text-left">
+          <Image
+            src={testimonial.data.cover}
+            alt={testimonial.data.name}
+            class="rounded-[var(--border-radius-general)]"
+            width={50}
+            height={50}
+          />
+          <h6>{testimonial.data.name}</h6>
+        </header>
+        <p data-ignore-sizing class="text-base">
+          {testimonial.data.text}
+        </p>
+      </Card>
+    ))
+  }
+</div>
+<div
+  class="testimonials-marquee hidden grid-flow-row items-center gap-12 overflow-visible text-left lg:grid lg:grid-flow-col"
+>
+  {
+    visiblePersons.map((testimonial) => (
+      <Card
+        animationWithScroll
+        data-component="testimonial"
+        class={cardClasses}
+        target="_blank"
+        rel="noopener"
+        as="a"
+        href={testimonial.data.linkedinURL}
+      >
+        <header class="grid grid-flow-col items-center justify-start gap-2 text-left">
+          <Image
+            src={testimonial.data.cover}
+            alt={testimonial.data.name}
+            class="rounded-[var(--border-radius-general)]"
+            width={50}
+            height={50}
+          />
+          <h6>{testimonial.data.name}</h6>
+        </header>
+        <p data-ignore-sizing class="text-base">
+          {testimonial.data.text}
+        </p>
+      </Card>
+    ))
+  }
+</div>
+<style is:global>
+  @keyframes testimonials-marquee {
+    to {
+      transform: translateX(calc(-100% - var(--_gap)));
+    }
+  }
+
+  .testimonials-marquee {
+    --_gap: 2rem;
+    --_time: 24s;
+    user-select: none;
+    animation-play-state: var(--animation-state);
+  }
+
+  @media (width >= 64rem) {
+    .testimonials-marquee {
+      animation: testimonials-marquee var(--_time) linear infinite;
+      animation-play-state: var(--animation-state);
+    }
+  }
+
+  [data-theme-context="nick"][data-theme="0"] {
+    [data-component="testimonial"] {
+      background-color: hsl(from var(--color-primary) h s l / 5%);
+      &:hover {
+        background-color: hsl(from var(--color-primary) h s l / 10%);
+      }
+    }
+  }
+
+  [data-component="testimonial"] p::before {
+    content: "“";
+    font-size: 7rem;
+    line-height: 1;
+    position: absolute;
+    left: -1.2rem;
+    top: -2rem;
+    color: var(--color-primary);
+    opacity: 0.4;
+  }
+</style>

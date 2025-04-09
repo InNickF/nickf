@@ -6,7 +6,7 @@ import ProjectsList from "./ProjectsList.astro";
 <Section
   class="mt-14"
   titleClass="-mt-12 "
-  bodyClass="horizontal-scroll-animation grid grid-cols-1 lg:flex lg:flew-wrap lg:flex-nowrap gap-8 px-4 lg:px-12 pb-4 max-h-calc(100dvh-8rem) 3xl:max-h-calc(100dvh-8rem)"
+  bodyClass="horizontal-scroll-animation grid grid-cols-1 lg:flex lg:flew-wrap lg:flex-nowrap gap-8 px-4 lg:px-12 pb-4 3xl:pb-18 max-h-calc(100dvh-8rem) 3xl:max-h-calc(100dvh-8rem) lg:pl-24"
   title="projects"
   animationDelay={2}
 >
@@ -19,6 +19,7 @@ import ProjectsList from "./ProjectsList.astro";
   const articles = document.querySelectorAll(
     ".horizontal-scroll-animation > article",
   ) as unknown as HTMLElement[];
+
   const wrapper = document.querySelector(
     ".horizontal-scroll-animation",
   ) as HTMLElement;
@@ -27,11 +28,11 @@ import ProjectsList from "./ProjectsList.astro";
 
   mm.add("(min-width: 1024px)", () => {
     gsap.to(".horizontal-scroll-animation > article", {
-      xPercent: -100 * (articles.length - 1),
+      xPercent: -100 * (articles.length - 1.5),
       ease: "none",
       scrollTrigger: {
         start: "-12% top",
-        trigger: ".horizontal-scroll-animation",
+        trigger: wrapper,
         pin: true,
         scrub: 0.5,
         end: "+=1200",

@@ -3,11 +3,19 @@ import type { HTMLAttributes } from "astro/types";
 import { twMerge } from "tailwind-merge";
 
 export interface Props extends HTMLAttributes<"div"> {
-  as?: "div" | "section" | "article" | "navbar";
+  as?: "div" | "section" | "article" | "navbar" | "a";
+  href?: string;
+  target?: string;
+  rel?: string;
+  animationWithScroll?: boolean;
 }
 
-const { class: className, as: asElement = "div", ...props } = Astro.props;
-const classes = twMerge(" border-transparent", className);
+const { class: className, as: asElement = "div", ...props } = Astro.props,
+  classes = twMerge(
+    " border-transparent",
+    Astro.props.animationWithScroll ? "with-scroll" : "",
+    className,
+  );
 ---
 
 {
@@ -39,6 +47,14 @@ const classes = twMerge(" border-transparent", className);
     <div data-c="card" {...props} class={classes}>
       <slot />
     </div>
+  )
+}
+
+{
+  asElement === "a" && (
+    <a data-c="card" {...props} class={classes}>
+      <slot />
+    </a>
   )
 }
 
@@ -142,6 +158,10 @@ const classes = twMerge(" border-transparent", className);
         cover -10% cover 100%,
         entry 0% cover 100%,
         entry 0% exit 150%;
+    }
+    [data-theme-context="nick"][data-theme="1"] [data-c="card"].with-scroll {
+      animation-timeline: scroll();
+      animation-range: normal;
     }
   }
 

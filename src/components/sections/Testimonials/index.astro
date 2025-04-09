@@ -1,12 +1,25 @@
 ---
 import Section from "@/components/general/Section.astro";
+import TestimonialsMarquee from "./TestimonialsMarquee.astro";
 ---
 
 <Section
   class="mt-14 min-h-[60dvh]"
   title="They came for code, stayed for the vibes."
-  bodyClass="text-left"
-  titleClass="text-left text-7xl mr-auto"
+  bodyClass="testimonials-marquee-wrapper flex flex-nowrap gap-12 p-6"
+  titleClass="text-left text-7xl mr-auto px-4 lg:px-24"
   animationWithScroll
+  customGridRows="grid-rows-[min-content]"
   stickyTitle={false}
-/>
+>
+  <TestimonialsMarquee />
+</Section>
+
+<style is:global>
+  .testimonials-marquee-wrapper {
+    --animation-state: running;
+  }
+  .testimonials-marquee-wrapper:has([data-component="testimonial"]:hover) {
+    --animation-state: paused;
+  }
+</style>

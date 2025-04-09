@@ -5,19 +5,22 @@ export interface Props {
   title: string;
   class?: string;
   bodyClass?: string;
+  customGridRows?: string;
   titleClass?: string;
   animationDelay?: number;
   animationWithScroll?: boolean;
   stickyTitle?: boolean;
 }
 const isSticky = Astro.props.stickyTitle ?? true,
+  customGridRows = Astro.props.customGridRows ?? false,
   classes = twMerge(
-    "grid grid-cols-1 grid-rows-[8rem_1fr] min-h-dvh relative",
+    "grid grid-cols-1 min-h-dvh relative",
+    customGridRows ? customGridRows : "grid grid-rows-[8rem_1fr]",
     Astro.props.class,
   ),
   bodyClasses = twMerge("z-0 overflow-hidden", Astro.props.bodyClass),
   titleClasses = twMerge(
-    "mt-2 py-6 mb-auto mx-auto text-8xl font-bold z-10 overflow-hidden px-24 text-balance",
+    "mt-2 py-6 mb-auto mx-auto text-8xl font-bold z-10 overflow-hidden text-balance pointer-events-none",
     isSticky ? "lg:sticky lg:top-[calc(8rem+2rem)] pb-96" : "",
     Astro.props.titleClass,
   ),
@@ -41,7 +44,7 @@ const isSticky = Astro.props.stickyTitle ?? true,
         const needSpace = hasSpaces && !isLastWord;
         return (
           <span
-            class="translate-y-[140%]"
+            class="translate-y-[140%] opacity-0"
             style={{
               "--_i": i,
             }}
@@ -103,6 +106,11 @@ const isSticky = Astro.props.stickyTitle ?? true,
       duration: 0.5,
       delay,
       ease: "power2.inOut",
+      onStart: () => {
+        words.forEach((word) => {
+          word.classList.remove("opacity-0");
+        });
+      },
     };
 
     if (animationWithScroll) {
