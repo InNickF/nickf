@@ -1,0 +1,61 @@
+<div
+  aria-hidden="true"
+  class="pointer-events-none absolute inset-0 z-20 grid grid-cols-1"
+  data-component="shift"
+>
+  <div><span></span></div>
+  <div><span></span></div>
+  <div><span></span></div>
+  <div><span></span></div>
+  <div><span></span></div>
+  <div><span></span></div>
+  <div><span></span></div>
+  <div><span></span></div>
+</div>
+<style>
+  [data-component="shift"] {
+    mix-blend-mode: difference;
+
+    div {
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+    }
+    span {
+      display: block;
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-text-color);
+      transform: translateY(-101%);
+    }
+  }
+</style>
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/all";
+  gsap.registerPlugin(ScrollTrigger);
+
+  const shiftContainer = document.querySelectorAll(
+    `[data-component="shift"]`,
+  ) as unknown as HTMLDivElement[];
+
+  const shiftElements = Array.from(
+    document.querySelectorAll(
+      `[data-component="shift"] span`,
+    ) as unknown as HTMLSpanElement[],
+  );
+
+  gsap.to(shiftElements, {
+    y: "0",
+
+    ease: "power2.inOut",
+    scrollTrigger: {
+      trigger: shiftContainer,
+      start: "20% 80%",
+      end: "60% 80%",
+      scrub: 1,
+      toggleActions: "play none none reverse",
+      markers: true,
+    },
+  });
+</script>

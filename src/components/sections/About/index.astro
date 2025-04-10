@@ -1,5 +1,6 @@
 ---
 import Section from "@/components/general/Section.astro";
+import Shift from "./Shift.astro";
 ---
 
 <Section
@@ -10,8 +11,9 @@ import Section from "@/components/general/Section.astro";
   animationWithScroll
   stickyTitle={false}
 >
+  <Shift slot="after-body" />
   <p class="mb-4 lg:max-w-3/4 xl:max-w-2/4">
-    Product Designer & Full-Stack Developer with over 8 years of experience
+    Product Designer & Front-End Developer with over 8 years of experience
     creating digital products, libraries, and web applications from the ground
     up. I believe technology goes beyond tools—it's a creative language capable
     of generating emotion, connection, and transformation.
@@ -25,7 +27,7 @@ import Section from "@/components/general/Section.astro";
   </p>
   <a
     data-ignore-sizing
-    href="/"
+    href="/docs/cv.pdf"
     target="_blank"
     rel="noopener noreferrer"
     class="max-w-[max-content] text-xl hover:underline lg:text-2xl"
