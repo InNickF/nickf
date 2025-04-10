@@ -94,12 +94,23 @@ const project = Astro.props.project,
 <style is:global>
   [data-component="project"] {
     picture {
+      transition: transform 0.2s ease-in-out;
       --minus-padding: 0rem;
       border-radius: calc(var(--border-radius-general) - var(--minus-padding));
       overflow: hidden;
+      --perspective-x: 0deg;
+      --perspective-y: 0deg;
+      transform: perspective(2200px) rotateY(var(--perspective-x))
+        rotateX(var(--perspective-y));
     }
     * {
       text-wrap: balance;
+    }
+  }
+
+  [data-component="project"]:hover {
+    picture {
+      transition: none;
     }
   }
 
@@ -118,6 +129,8 @@ const project = Astro.props.project,
       }
     }
   }
+  [data-animation="project"] {
+  }
 
   [data-theme-context="nick"][data-theme="1"] {
     [data-component="project"] {
@@ -127,3 +140,51 @@ const project = Astro.props.project,
     }
   }
 </style>
+<!-- <script>
+  const cards = Array.from(
+    document.querySelectorAll("[data-animation='project']"),
+  );
+
+  const handle3dMouseMovement = ({
+    container,
+    event,
+    target,
+  }: {
+    event: MouseEvent;
+    target: HTMLElement;
+    container: HTMLElement;
+  }) => {
+    if (window.innerWidth > 1280) {
+      const friction = 1 / 8.5;
+      const followX =
+        container.offsetWidth / 2 - (event.clientX - container.offsetLeft);
+      const followY =
+        container.offsetHeight / 2 - (event.clientY - container.offsetTop);
+      let x = 0;
+      let y = 0;
+      x += (-followX - x) * friction;
+      y += (followY - y) * friction;
+      const normalizedY = Math.min(Math.max(y, -10), 10);
+      target.style.setProperty("--perspective-x", `${x}deg`);
+      target.style.setProperty("--perspective-y", `${normalizedY}deg`);
+    }
+  };
+
+  cards.forEach((card) => {
+    const target = card.querySelector("picture") as HTMLElement;
+
+    card.addEventListener("mousemove", (e) => {
+      const event = e as MouseEvent;
+      handle3dMouseMovement({
+        container: card as HTMLElement,
+        event,
+        target: target as HTMLElement,
+      });
+    });
+
+    card.addEventListener("mouseleave", () => {
+      target.style.setProperty("--perspective-x", `0deg`);
+      target.style.setProperty("--perspective-y", `0deg`);
+    });
+  });
+</script> -->

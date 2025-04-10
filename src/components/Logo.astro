@@ -82,7 +82,9 @@ import CtaContainer from "./general/CtaContainer.astro";
   const logo: SVGAElement = document.querySelector("#Logo")!;
   window.addEventListener("scroll", () => {
     const scrollTop = window.scrollY;
-    const rotation = scrollTop * 0.5; // Adjust factor as needed
-    logo.style.rotate = `${rotation}deg`;
+    const scrollAsPercentage =
+      scrollTop / (document.body.scrollHeight - window.innerHeight);
+    const rotation = scrollAsPercentage * 10; // * turns
+    logo.style.rotate = `${rotation}turn`;
   });
 </script>
