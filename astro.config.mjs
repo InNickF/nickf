@@ -1,11 +1,9 @@
 // @ts-check
-import { defineConfig } from "astro/config";
-import tailwindcss from "@tailwindcss/vite";
-import react from "@astrojs/react";
-import vue from "@astrojs/vue";
-import partytown from "@astrojs/partytown";
-import sitemap from "@astrojs/sitemap";
 import cloudflare from "@astrojs/cloudflare";
+import react from "@astrojs/react";
+import sitemap from "@astrojs/sitemap";
+import tailwindcss from "@tailwindcss/vite";
+import { defineConfig } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,7 +16,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  integrations: [partytown(), react(), vue(), sitemap()],
+  integrations: [react(), sitemap()],
   output: "static",
   adapter: cloudflare(),
 });
