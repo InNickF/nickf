@@ -3,6 +3,7 @@ import {
   Environment,
   Lightformer,
   MeshTransmissionMaterial,
+  PerformanceMonitor,
   useTexture,
 } from "@react-three/drei";
 import {
@@ -15,7 +16,6 @@ import {
   ChromaticAberration,
   EffectComposer,
   N8AO,
-  Noise,
 } from "@react-three/postprocessing";
 import {
   BallCollider,
@@ -26,24 +26,44 @@ import {
   RigidBody,
 } from "@react-three/rapier";
 import { easing } from "maath";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { MathUtils, Mesh, Vector3 } from "three";
 import useThemeEvent from "./hooks/useThemeEvent";
+interface ShuffleParams {
+  color?: string;
+  activeTheme?: number;
+  currentHue?: string;
+}
 
-const shuffle = () => {
-  const themeContext = document.querySelector(
+const getDocumentStyles = () => {
+  const themeContext = document?.querySelector(
     '[data-theme-context="nick"]',
   ) as HTMLDivElement;
-
   const activeTheme = Number(themeContext?.getAttribute("data-theme")) || 0;
-
-  const isFirstTheme = activeTheme === 0;
   const themeStyles = getComputedStyle(themeContext);
-  const getThemeColor = themeStyles.getPropertyValue("--color-primary");
-  const newColor = modifyHSL(getThemeColor, {
-    s: (s) => (isFirstTheme ? s + 2 : s - 0.2),
-    l: (l) => (isFirstTheme ? l + 15 : l - 20),
-  });
+  const color = themeStyles.getPropertyValue("--color-primary");
+  const currentHue = themeContext?.getAttribute("data-theme-hue") || "350";
+  return {
+    activeTheme,
+    color,
+    currentHue,
+  };
+};
+
+const shuffle = ({
+  activeTheme = 0,
+  color = "hsl(350, 23%, 40%)",
+  currentHue = "350",
+}: ShuffleParams) => {
+  const isFirstTheme = activeTheme === 0;
+  const newColor = modifyHSL(
+    color,
+    {
+      s: (s) => (isFirstTheme ? s + 2 : s - 0.2),
+      l: (l) => (isFirstTheme ? l + 15 : l - 20),
+    },
+    currentHue,
+  );
 
   return [
     { color: "#444", isSquared: isFirstTheme },
@@ -104,17 +124,16 @@ const shuffle = () => {
 };
 
 export function Scene({ className, ...props }: CanvasProps) {
-  const [rerender, setRerender] = useState(0);
-  const makeRerender = useCallback(() => {
-    setRerender((prev) => prev + 1);
-  }, []);
-
-  useThemeEvent(makeRerender);
+  const [perfSucks, degrade] = useState(true);
+  const [connectors, setConnectors] = useState(shuffle({}));
+  useThemeEvent(() => {
+    const { activeTheme, color, currentHue } = getDocumentStyles();
+    const newConnectors = shuffle({ activeTheme, color, currentHue });
+    setConnectors(newConnectors);
+  });
   const getClasses = () => {
     return `react-scene ${className}`;
   };
-
-  const connectors = useMemo(() => shuffle(), [rerender]);
 
   return (
     <Canvas
@@ -128,6 +147,10 @@ export function Scene({ className, ...props }: CanvasProps) {
       camera={{ position: [20, 1, 15], fov: 18, near: 1, far: 50 }}
       {...props}
     >
+      <PerformanceMonitor
+        onDecline={() => degrade(true)}
+        onIncline={() => degrade(false)}
+      />
       <ambientLight intensity={3} />
       <spotLight
         position={[10, 10, 10]}
@@ -187,11 +210,18 @@ export function Scene({ className, ...props }: CanvasProps) {
           />
         </group>
       </Environment>
-      <EffectComposer multisampling={14}>
-        <N8AO distanceFalloff={10} aoRadius={10} intensity={8} />
-        <ChromaticAberration offset={[0.001, 0.001]} />
-      </EffectComposer>
+      <Effects perfSucks={perfSucks} />
     </Canvas>
+  );
+}
+interface EffectsProps {
+  perfSucks?: boolean;
+}
+function Effects({ perfSucks }: EffectsProps) {
+  return (
+    <EffectComposer multisampling={14}>
+      <N8AO distanceFalloff={10} aoRadius={10} intensity={8} />
+    </EffectComposer>
   );
 }
 

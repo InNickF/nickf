@@ -9,17 +9,19 @@ export interface Props {
   project: Project;
   class?: string;
   titleClass?: string;
+  isFirst?: boolean;
 }
 const project = Astro.props.project,
   classes = twMerge(
-    "w-full h-full lg:min-w-lg 3xl:min-w-2xl p-4 text-left grid grid-cols-1 grid-rows-[auto_auto_1fr_auto] content-start gap-4",
+    "w-full h-full lg:min-w-lg 3xl:min-w-xl p-4 text-left grid grid-cols-1 grid-rows-[auto_auto_1fr_auto] content-start gap-4",
     Astro.props.class,
   ),
-  titleClasses = twMerge("text-4xl", Astro.props.titleClass),
-  hasAdditionalLinks = !!project?.links?.length;
+  titleClasses = twMerge("text-4xl text-balance", Astro.props.titleClass),
+  hasAdditionalLinks = !!project?.links?.length,
+  isFirst = Astro.props.isFirst;
 ---
 
-<Card data-animation="project" animationWithScroll>
+<Card data-animation="project" animationWithScroll class:list={{ isFirst }}>
   <div data-component="project" class={classes}>
     <Picture
       format="webp"
@@ -28,7 +30,7 @@ const project = Astro.props.project,
       class="w-full object-cover"
       loading="lazy"
     />
-    <div class="grid grid-cols-1 gap-2 px-6">
+    <div class="grid grid-cols-1 gap-2">
       <h4 data-ignore-sizing class={titleClasses}>
         {project.title}
         <small class="font-sans text-sm opacity-70">({project.date})</small>
@@ -53,7 +55,7 @@ const project = Astro.props.project,
         }</small
       >
     </div>
-    <div class="grid grid-cols-1 content-end px-6">
+    <div class="grid grid-cols-1 content-end">
       {
         hasAdditionalLinks && (
           <ul class="flex flex-wrap gap-4">
@@ -76,7 +78,14 @@ const project = Astro.props.project,
         )
       }
     </div>
-    <Button class="py-3" isLink href={project.cto.href} target="_black">
+    <Button
+      intent={isFirst ? "secondary" : "primary"}
+      class="py-3"
+      noDecoration={isFirst}
+      isLink
+      href={project.cto.href}
+      target="_black"
+    >
       {project.cto.text}
     </Button>
   </div>
@@ -99,6 +108,13 @@ const project = Astro.props.project,
       background-color: hsl(from var(--color-primary) h s l / 5%);
       &:hover {
         background-color: hsl(from var(--color-primary) h s l / 10%);
+      }
+    }
+    [data-animation="project"].isFirst {
+      background-color: var(--color-primary);
+      color: var(--color-over-primary);
+      &:hover {
+        background-color: hsl(from var(--color-primary) h s calc(l - 20));
       }
     }
   }

@@ -5,8 +5,8 @@ import ProjectsList from "./ProjectsList.astro";
 
 <Section
   class="mt-14"
-  titleClass="-mt-12 "
-  bodyClass="horizontal-scroll-animation grid grid-cols-1 lg:flex lg:flew-wrap lg:flex-nowrap gap-8 px-6 lg:px-12 pb-4 3xl:pb-18 max-h-calc(100dvh-8rem) 3xl:max-h-calc(100dvh-8rem) lg:pl-24"
+  titleClass="-mt-12 projects-title"
+  bodyClass="horizontal-scroll-animation grid grid-cols-1 lg:flex lg:flew-wrap lg:flex-nowrap gap-8 px-6 lg:px-12 pb-4 max-h-calc(100vh-8rem) 3xl:max-h-calc(100vh-8rem) lg:pl-42"
   title="projects"
   animationDelay={2}
 >
@@ -20,6 +20,10 @@ import ProjectsList from "./ProjectsList.astro";
     ".horizontal-scroll-animation > [data-animation='project']",
   ) as unknown as HTMLElement[];
 
+  const title = document.querySelector(
+    ".projects-title",
+  ) as unknown as HTMLElement;
+
   const wrapper = document.querySelector(
     ".horizontal-scroll-animation",
   ) as HTMLElement;
@@ -27,11 +31,23 @@ import ProjectsList from "./ProjectsList.astro";
   const mm = gsap.matchMedia();
 
   mm.add("(min-width: 1024px)", () => {
+    setTimeout(() => {
+      gsap.to(title, {
+        opacity: 0,
+        scrollTrigger: {
+          trigger: title,
+          start: "top top",
+          end: "+=250",
+          scrub: 0.1,
+        },
+      });
+    }, 0);
+
     gsap.to(".horizontal-scroll-animation > [data-animation='project']", {
       xPercent: -100 * (articles.length - 1.5),
       ease: "none",
       scrollTrigger: {
-        start: "-12% top",
+        start: "20px 120px",
         trigger: wrapper,
         pin: true,
         scrub: 1,

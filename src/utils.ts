@@ -51,6 +51,13 @@ export function throttle<T extends (...args: any[]) => void>(
 
 export const throttleChangeTheme = throttle(changeTheme, 100);
 
+const getCurrentHue = () => {
+  if (!document) return "350";
+  const themeContext = document.querySelector(`[data-theme-context="nick"]`);
+  if (!themeContext) return "350";
+  return themeContext.getAttribute("data-theme-hue") || "350";
+};
+
 export function modifyHSL(
   hslString: string,
   modifiers: {
@@ -58,12 +65,8 @@ export function modifyHSL(
     s?: (s: number) => number;
     l?: (l: number) => number;
   },
+  currentHue = "350",
 ): string {
-  const themeContext = document.querySelector(`[data-theme-context="nick"]`);
-  if (!themeContext) return hslString;
-
-  const currentHue = themeContext.getAttribute("data-theme-hue") || "350";
-
   const hslReplacedString = hslString.replace(
     "attr(data-theme-hue type(<number>), 350)",
     currentHue,

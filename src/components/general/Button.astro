@@ -38,6 +38,10 @@ const button = cva(
         false: null,
         true: ["opacity-70", "cursor-not-allowed"],
       },
+      noDecoration: {
+        false: null,
+        true: ["no-decoration"],
+      },
     },
   },
 );
@@ -56,10 +60,14 @@ const {
   size = "medium",
   isLink = false,
   disabled = false,
+  noDecoration = false,
   ...props
 } = Astro.props;
 
-const classes = twMerge(button({ intent, size, disabled }), className);
+const classes = twMerge(
+  button({ intent, size, disabled, noDecoration }),
+  className,
+);
 ---
 
 {
@@ -102,7 +110,7 @@ const classes = twMerge(button({ intent, size, disabled }), className);
     scale: 0.95;
   }
 
-  [data-component="button"]::after {
+  [data-component="button"]:not(.no-decoration)::after {
     content: "";
     border: 2px solid rgba(from var(--_text-color-used) r g b / 0);
     border-radius: var(--border-radius-general);

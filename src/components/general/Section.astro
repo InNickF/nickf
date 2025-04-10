@@ -14,7 +14,7 @@ export interface Props {
 const isSticky = Astro.props.stickyTitle ?? true,
   customGridRows = Astro.props.customGridRows ?? false,
   classes = twMerge(
-    "grid grid-cols-1 min-h-dvh relative",
+    "grid grid-cols-1 lg:min-h-dvh relative",
     customGridRows ? customGridRows : "grid grid-rows-[8rem_1fr]",
     Astro.props.class,
   ),
