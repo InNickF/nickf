@@ -58,23 +58,21 @@ const project = Astro.props.project,
     <div class="grid grid-cols-1 content-end">
       {
         hasAdditionalLinks && (
-          <ul class="flex flex-wrap gap-4">
+          <div class="flex flex-wrap gap-4">
             <p data-ignore-sizing class="-mr-2">
               Additional Links:
             </p>
             {project?.links?.map((link) => (
-              <li>
-                <a
-                  data-ignore-sizing
-                  class="text-base underline"
-                  href={link.href}
-                  target="_blank"
-                >
-                  {link.text}
-                </a>
-              </li>
+              <a
+                data-ignore-sizing
+                class="text-base underline"
+                href={link.href}
+                target="_blank"
+              >
+                {link.text}
+              </a>
             ))}
-          </ul>
+          </div>
         )
       }
     </div>

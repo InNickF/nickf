@@ -12,11 +12,7 @@ import {
   type CanvasProps,
   type Vector3 as TVector3,
 } from "@react-three/fiber";
-import {
-  ChromaticAberration,
-  EffectComposer,
-  N8AO,
-} from "@react-three/postprocessing";
+import { EffectComposer, N8AO } from "@react-three/postprocessing";
 import {
   BallCollider,
   CuboidCollider,
