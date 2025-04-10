@@ -29,26 +29,12 @@ import { easing } from "maath";
 import { useMemo, useRef, useState } from "react";
 import { MathUtils, Mesh, Vector3 } from "three";
 import useThemeEvent from "./hooks/useThemeEvent";
+import { getDocumentStyles } from "./utils";
 interface ShuffleParams {
   color?: string;
   activeTheme?: number;
   currentHue?: string;
 }
-
-const getDocumentStyles = () => {
-  const themeContext = document?.querySelector(
-    '[data-theme-context="nick"]',
-  ) as HTMLDivElement;
-  const activeTheme = Number(themeContext?.getAttribute("data-theme")) || 0;
-  const themeStyles = getComputedStyle(themeContext);
-  const color = themeStyles.getPropertyValue("--color-primary");
-  const currentHue = themeContext?.getAttribute("data-theme-hue") || "350";
-  return {
-    activeTheme,
-    color,
-    currentHue,
-  };
-};
 
 const shuffle = ({
   activeTheme = 0,
