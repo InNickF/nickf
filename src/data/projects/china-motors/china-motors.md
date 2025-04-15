@@ -11,6 +11,7 @@ alt: "China Motors | Project Cover"
 date: "2019"
 fields:
   - "Front-End"
+  - "Back-End"
   - "Marketing"
 technologies:
   - "Illustrator"

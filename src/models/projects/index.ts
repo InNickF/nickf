@@ -3,6 +3,7 @@ import { z } from "astro:content";
 export const AVAILABLE_FIELDS = [
   "UX/UI",
   "Front-End",
+  "Back-End",
   "Product Strategy",
   "Branding",
   "Marketing",

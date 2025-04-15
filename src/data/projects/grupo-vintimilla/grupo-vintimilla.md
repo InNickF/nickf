@@ -15,6 +15,7 @@ date: "2019"
 fields:
   - "UX/UI"
   - "Front-End"
+  - "Back-End"
   - "Branding"
   - "Animation"
 technologies:
