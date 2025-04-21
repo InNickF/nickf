@@ -133,65 +133,21 @@ export function Scene({ className, ...props }: CanvasProps) {
         onDecline={() => degrade(true)}
         onIncline={() => degrade(false)}
       />
-      <ambientLight intensity={3} />
-      <spotLight
-        position={[10, 10, 10]}
-        angle={0.15}
-        penumbra={1}
-        intensity={1}
-        castShadow
-      />
+      <Lights perfSucks={perfSucks} />
       <Controls />
       <Physics gravity={[0, 0, 0]}>
         <Pointer />
-        {connectors.map((props, i) => (
-          <PhysicsElement key={i} {...props} />
-        ))}
-        <PhysicsElement
-          position={[-10, -10, 10]}
-          isSquared={connectors[0].isSquared}
-        >
-          <SecondModel isSquared={connectors[0].isSquared} />
-        </PhysicsElement>
-        <PhysicsElement
-          position={[10, 10, 10]}
-          isSquared={connectors[0].isSquared}
-        >
-          <SecondModel isSquared={connectors[0].isSquared} />
-        </PhysicsElement>
+        {connectors.map((props, i) => {
+          const hasToRender = perfSucks ? i % 2 === 0 : true;
+          return hasToRender && <PhysicsElement key={i} {...props} />;
+        })}
+        <ExtraShapes
+          perfSucks={perfSucks}
+          isSquared={connectors[0]?.isSquared}
+        />
       </Physics>
-      <Environment resolution={256}>
-        <group rotation={[-Math.PI / 3, 0, 1]}>
-          <Lightformer
-            form="circle"
-            intensity={4}
-            rotation-x={Math.PI / 2}
-            position={[0, 5, -9]}
-            scale={4}
-          />
-          <Lightformer
-            form="circle"
-            intensity={2}
-            rotation-y={Math.PI / 2}
-            position={[-5, 1, -1]}
-            scale={2}
-          />
-          <Lightformer
-            form="circle"
-            intensity={2}
-            rotation-y={Math.PI / 2}
-            position={[-5, -1, -1]}
-            scale={2}
-          />
-          <Lightformer
-            form="circle"
-            intensity={2}
-            rotation-y={-Math.PI / 2}
-            position={[10, 1, 0]}
-            scale={8}
-          />
-        </group>
-      </Environment>
+
+      <Envs perfSucks={perfSucks} />
       <Effects perfSucks={perfSucks} />
     </Canvas>
   );
@@ -200,10 +156,47 @@ interface EffectsProps {
   perfSucks?: boolean;
 }
 function Effects({ perfSucks }: EffectsProps) {
-  return (
+  return perfSucks ? null : (
     <EffectComposer multisampling={14}>
       <N8AO distanceFalloff={10} aoRadius={10} intensity={8} />
     </EffectComposer>
+  );
+}
+
+function Envs({ perfSucks }: { perfSucks?: boolean }) {
+  return perfSucks ? null : (
+    <Environment resolution={256}>
+      <group rotation={[-Math.PI / 3, 0, 1]}>
+        <Lightformer
+          form="circle"
+          intensity={4}
+          rotation-x={Math.PI / 2}
+          position={[0, 5, -9]}
+          scale={4}
+        />
+        <Lightformer
+          form="circle"
+          intensity={2}
+          rotation-y={Math.PI / 2}
+          position={[-5, 1, -1]}
+          scale={2}
+        />
+        <Lightformer
+          form="circle"
+          intensity={2}
+          rotation-y={Math.PI / 2}
+          position={[-5, -1, -1]}
+          scale={2}
+        />
+        <Lightformer
+          form="circle"
+          intensity={2}
+          rotation-y={-Math.PI / 2}
+          position={[10, 1, 0]}
+          scale={8}
+        />
+      </group>
+    </Environment>
   );
 }
 
@@ -221,12 +214,49 @@ function Controls() {
   return null;
 }
 
+function ExtraShapes({
+  perfSucks,
+  isSquared,
+}: {
+  perfSucks?: boolean;
+  isSquared: boolean;
+}) {
+  return (
+    <>
+      <PhysicsElement position={[-10, -10, 10]} isSquared={isSquared}>
+        <SecondModel isSquared={isSquared} />
+      </PhysicsElement>
+      {perfSucks ? null : (
+        <PhysicsElement position={[10, 10, 10]} isSquared={isSquared}>
+          <SecondModel isSquared={isSquared} />
+        </PhysicsElement>
+      )}
+    </>
+  );
+}
+
+function Lights({ perfSucks }: { perfSucks?: boolean }) {
+  return perfSucks ? null : (
+    <>
+      <ambientLight intensity={3} />
+      <spotLight
+        position={[10, 10, 10]}
+        angle={0.15}
+        penumbra={1}
+        intensity={1}
+        castShadow
+      />
+    </>
+  );
+}
+
 function PhysicsElement({
   position,
   children,
   vec = new Vector3(),
   scale,
   r = MathUtils.randFloatSpread,
+  perfSucks,
   ...props
 }: {
   position?: TVector3;
@@ -236,6 +266,7 @@ function PhysicsElement({
   r?: (value: number) => number;
   color?: string;
   isSquared: boolean;
+  perfSucks?: boolean;
 } & React.ComponentProps<typeof RigidBody>) {
   const api = useRef<RapierRigidBody>(null!);
   const pos = useMemo(() => position || [r(12), r(12), r(12)], []) as Vector3;
@@ -302,6 +333,7 @@ function Model({
   color = "white",
   metalness = 0.4,
   roughness = 1,
+  perfSucks,
   ...props
 }: {
   children?: React.ReactNode;
@@ -309,6 +341,7 @@ function Model({
   isSquared: boolean;
   metalness?: number;
   roughness?: number;
+  perfSucks?: boolean;
 } & React.ComponentProps<typeof RigidBody>) {
   const ref = useRef<Mesh>(null!);
   useFrame((state, delta) => {
@@ -322,11 +355,7 @@ function Model({
       ) : (
         <sphereGeometry args={[0.3]} />
       )}
-      <meshStandardMaterial
-        metalness={metalness}
-        roughness={roughness}
-        map={displacement}
-      />
+      {perfSucks ? null : <meshBasicMaterial map={displacement} />}
       {children}
     </mesh>
   );

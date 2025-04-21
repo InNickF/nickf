@@ -101,19 +101,6 @@ const { class: className, as: asElement = "div", ...props } = Astro.props,
     --surface-3: hsl(from var(--color-ghost) h s calc(l + 25));
     --shadow-color: var(--color-ghost);
     --shadow-strength: 1%;
-    --shadow:
-      0 -2px 5px 0 hsl(var(--shadow-color) / calc(var(--shadow-strength) + 2%)),
-      0 1px 1px -2px
-        hsl(from var(--shadow-color) h s l / calc(var(--shadow-strength) + 3%)),
-      0 2px 2px -2px
-        hsl(from var(--shadow-color) h s l / calc(var(--shadow-strength) + 3%)),
-      0 5px 5px -2px
-        hsl(from var(--shadow-color) h s l / calc(var(--shadow-strength) + 4%)),
-      0 9px 9px -2px
-        hsl(from var(--shadow-color) h s l / calc(var(--shadow-strength) + 5%)),
-      0 16px 16px -2px
-        hsl(from var(--shadow-color) h s l / calc(var(--shadow-strength) + 6%));
-
     --_gleam: linear-gradient(
         115deg,
         transparent 40%,
@@ -143,16 +130,13 @@ const { class: className, as: asElement = "div", ...props } = Astro.props,
       )
       border-box;
 
-    box-shadow: var(--shadow);
-    background:
-      var(--_gleam-cover), var(--_gleam), var(--_cover), var(--_shine),
-      var(--_edges);
+    background: var(--_cover), var(--_shine), var(--_edges);
   }
 
   @supports (animation-timeline: view()) {
-    [data-theme-context="nick"][data-theme="1"] [data-c="card"] {
+    [data-theme-context="nick"][data-theme="1"] [data-c="card"].with-scroll {
       animation: linear both;
-      animation-name: gleam, shine, shadow;
+      animation-name: gleam, shine;
       animation-timeline: view();
       animation-range:
         cover -10% cover 100%,
@@ -173,17 +157,6 @@ const { class: className, as: asElement = "div", ...props } = Astro.props,
     to {
       --angle: 0.8turn;
       --x: 100%;
-    }
-  }
-
-  @keyframes shadow {
-    from,
-    to {
-      box-shadow: none;
-    }
-    50%,
-    65% {
-      box-shadow: var(--shadow);
     }
   }
 
