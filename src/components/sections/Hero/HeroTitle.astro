@@ -1,6 +1,6 @@
 ---
 const phrase =
-  "Technology is the first art form capable of empowering ideas — and reshaping reality.";
+  "Technology has the power to bring ideas to life — and reshape reality.";
 
 // Important space at the end of the word. And replace __ in case we want to animate groups of words.
 const words = phrase.split(" ").map((word) => `${word.replace("__", " ")} `);
@@ -9,7 +9,7 @@ const words = phrase.split(" ").map((word) => `${word.replace("__", " ")} `);
 <h3
   data-ignore-sizing
   data-component="page-title"
-  class="text-over-card 3xl:text-6xl relative z-30 mx-auto mt-24 mb-12 w-full p-6 text-center text-2xl text-balance md:w-3/4 md:p-0 md:text-4xl lg:w-2/3 xl:text-5xl 2xl:text-6xl"
+  class="text-over-card 3xl:text-6xl 3xl:leading-[1.3] l relative z-30 mx-auto mt-24 mb-12 w-full p-6 text-center text-2xl leading-9 text-balance md:w-3/4 md:p-0 md:text-4xl md:leading-[1.3] lg:w-2/3 xl:text-5xl xl:leading-[1.3] 2xl:text-6xl 2xl:leading-[1.3]"
 >
   {words.map((word) => <span class="hero-title to-animate">{word}</span>)}
 </h3>
