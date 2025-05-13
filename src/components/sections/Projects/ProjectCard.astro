@@ -21,7 +21,7 @@ const project = Astro.props.project,
   isFirst = Astro.props.isFirst;
 ---
 
-<Card data-animation="project" animationWithScroll class:list={{ isFirst }}>
+<Card data-animation="project" class:list={{ isFirst }}>
   <div data-component="project" class={classes}>
     <Picture
       format="webp"

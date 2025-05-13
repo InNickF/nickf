@@ -19,7 +19,6 @@ const projects = await getCollection("testimonials"),
   {
     visiblePersons.map((testimonial) => (
       <Card
-        animationWithScroll
         data-component="testimonial"
         class={cardClasses}
         target="_blank"
@@ -53,8 +52,6 @@ const projects = await getCollection("testimonials"),
   {
     visiblePersons.map((testimonial) => (
       <Card
-        aria-hidden="true"
-        animationWithScroll
         data-component="testimonial"
         class={cardClasses}
         target="_blank"
