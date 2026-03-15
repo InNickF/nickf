@@ -6,88 +6,114 @@ import { Picture } from "astro:assets";
 import { twMerge } from "tailwind-merge";
 
 export interface Props {
-  project: Project;
+  project: Project | null;
   class?: string;
   titleClass?: string;
+  opacity?: string;
   isFirst?: boolean;
 }
 const project = Astro.props.project,
   classes = twMerge(
-    "w-full h-full lg:min-w-lg 3xl:min-w-xl p-4 text-left grid grid-cols-1 grid-rows-[auto_auto_1fr_auto] content-start gap-4",
+    "w-full h-full xl:min-w-md 2xl:min-w-xl p-4 text-left grid grid-cols-1 grid-rows-[auto_auto_1fr_auto] content-start gap-4",
     Astro.props.class,
   ),
-  titleClasses = twMerge("text-4xl text-balance", Astro.props.titleClass),
+  titleClasses = twMerge(
+    "text-4xl md:text-3xl 3xl:text-4xl text-balance",
+    Astro.props.titleClass,
+  ),
   hasAdditionalLinks = !!project?.links?.length,
-  isFirst = Astro.props.isFirst;
+  isFirst = Astro.props.isFirst,
+  opacity = Astro.props.opacity;
 ---
 
-<Card data-animation="project" class:list={{ isFirst }}>
-  <div data-component="project" class={classes}>
-    <Picture
-      format="webp"
-      src={project.cover}
-      alt={project.alt}
-      class="w-full object-cover"
-      loading="lazy"
-    />
-    <div class="grid grid-cols-1 gap-2">
-      <h4 data-ignore-sizing class={titleClasses}>
-        {project.title}
-        <small class="font-sans text-sm opacity-70">({project.date})</small>
-      </h4>
-      <p data-ignore-sizing class="-mt-1 mb-1 italic">
-        {project.role}.
-      </p>
-      <p data-ignore-sizing class="mb-2 text-base">
-        {project.description}
-      </p>
-      <small>
-        <strong>Stack:</strong>
-        {
-          project.technologies.map((tech, i, list) => {
-            const isLastItem = i === list.length - 1;
-            return (
-              <span class="text-opacity-70 font-sans text-sm">
-                {`${tech}${!isLastItem ? ", " : "."}`}
-              </span>
-            );
-          })
-        }</small
-      >
-    </div>
-    <div class="grid grid-cols-1 content-end">
-      {
-        hasAdditionalLinks && (
-          <div class="flex flex-wrap gap-x-3 gap-y-1">
-            <p data-ignore-sizing class="-mr-2">
-              Additional Links:
-            </p>
-            {project?.links?.map((link) => (
-              <a
-                data-ignore-sizing
-                class="text-base underline"
-                href={link.href}
-                target="_blank"
-              >
-                {link.text}
-              </a>
-            ))}
-          </div>
-        )
-      }
-    </div>
-    <Button
-      intent={isFirst ? "secondary" : "primary"}
-      class="py-3"
-      noDecoration={isFirst}
-      isLink
-      href={project.cto.href}
-      target="_black"
+{
+  project && (
+    <Card data-animation="project" class:list={{ isFirst }}>
+      <div data-component="project" class={classes}>
+        <Picture
+          format="webp"
+          src={project.cover}
+          alt={project.alt}
+          class="w-full object-cover"
+          loading="lazy"
+        />
+        <div class="grid grid-cols-1 gap-2">
+          <h4 data-ignore-sizing class={titleClasses}>
+            {project.title}{" "}
+            <small class="font-sans text-sm opacity-70">({project.date})</small>
+          </h4>
+          <p
+            data-ignore-sizing
+            class="3xl:mb-2 -mt-2 -mb-1 text-base italic lg:text-sm 2xl:text-base"
+          >
+            {project.role}.
+          </p>
+          <p
+            data-ignore-sizing
+            class="3xl:text-base text-base text-balance md:text-sm"
+          >
+            {project.description}
+          </p>
+          <small class="3xl:text-base text-base md:text-sm">
+            <strong>Stack:</strong>
+            {project.technologies.map((tech, i, list) => {
+              const isLastItem = i === list.length - 1;
+              return (
+                <span class="text-opacity-70 font-sans">
+                  {`${tech}${!isLastItem ? ", " : "."}`}
+                </span>
+              );
+            })}
+          </small>
+        </div>
+        <div class="3xl:text-base grid grid-cols-1 content-end text-base md:text-sm">
+          {hasAdditionalLinks && (
+            <div class="flex flex-wrap gap-x-3 gap-y-1">
+              <p data-ignore-sizing class="-mr-2">
+                Additional Links:
+              </p>
+              {project?.links?.map((link) => (
+                <a
+                  data-ignore-sizing
+                  class="underline"
+                  href={link.href}
+                  target="_blank"
+                >
+                  {link.text}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+        <Button
+          intent={isFirst ? "secondary" : "primary"}
+          class="py-3"
+          noDecoration={isFirst}
+          isLink
+          href={project.cto.href}
+          target="_black"
+        >
+          {project.cto.text}
+        </Button>
+      </div>
+    </Card>
+  )
+}
+
+{
+  !project && (
+    <Card
+      data-animation="project"
+      data-animation-opacity={opacity}
+      class:list={{ isFirst }}
+      class="hidden xl:grid"
     >
-      {project.cto.text}
-    </Button>
-  </div>
-</Card>
+      <div data-component="project" class={classes}>
+        {" "}
+      </div>
+    </Card>
+  )
+}
 
 <style is:global>
   [data-component="project"] {

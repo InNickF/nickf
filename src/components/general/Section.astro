@@ -21,7 +21,7 @@ const isSticky = Astro.props.stickyTitle ?? true,
   bodyClasses = twMerge("z-0 overflow-hidden", Astro.props.bodyClass),
   titleClasses = twMerge(
     "mt-2 py-6 mb-auto mx-auto text-8xl font-bold z-10 overflow-hidden text-balance pointer-events-none",
-    isSticky ? "lg:sticky lg:top-[calc(8rem+2rem)] pb-96 able-to-stick" : "",
+    isSticky ? "xl:sticky lg:top-[calc(8rem+2rem)] pb-96 able-to-stick" : "",
     Astro.props.titleClass,
   ),
   hasSpaces = Astro.props.title.includes(" "),

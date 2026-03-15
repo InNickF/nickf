@@ -16,6 +16,10 @@ const projects = await getCollection("projects").then((projects) => {
   })
 }
 
+<ProjectCard project={null} opacity="0.7" />
+<ProjectCard project={null} opacity="0.5" />
+<ProjectCard project={null} opacity="0.35" />
+
 <script>
   import { gsap } from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -34,7 +38,8 @@ const projects = await getCollection("projects").then((projects) => {
         scale: 0.5,
       },
       {
-        opacity: 1,
+        opacity: (_i, el) =>
+          parseFloat((el as HTMLElement).dataset.animationOpacity ?? "1"),
         scale: 1,
         stagger: 0.1,
         duration: 0.3,
