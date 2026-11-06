@@ -8,12 +8,20 @@ export interface Props extends HTMLAttributes<"div"> {
   target?: string;
   rel?: string;
   animationWithScroll?: boolean;
+  /** Backdrop blur. Only enable it where something actually moves behind the card. */
+  blur?: boolean;
 }
 
-const { class: className, as: asElement = "div", ...props } = Astro.props,
+const {
+    class: className,
+    as: asElement = "div",
+    blur = false,
+    ...props
+  } = Astro.props,
   classes = twMerge(
     " border-transparent",
     Astro.props.animationWithScroll ? "with-scroll" : "",
+    blur ? "card-blur" : "",
     className,
   );
 ---
@@ -68,7 +76,15 @@ const { class: className, as: asElement = "div", ...props } = Astro.props,
 
   [data-c="card"] {
     border-radius: var(--border-radius-general);
+  }
+
+  /* backdrop-filter is expensive (re-sampled every frame something moves),
+     so it's opt-in, and disabled in theme 1 where cards are opaque anyway. */
+  [data-c="card"].card-blur {
     backdrop-filter: blur(10px);
+  }
+  [data-theme-context="nick"][data-theme="1"] [data-c="card"].card-blur {
+    backdrop-filter: none;
   }
 
   @property --angle {

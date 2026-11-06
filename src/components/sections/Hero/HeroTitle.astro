@@ -101,6 +101,11 @@ const words = phrase.split(" ").map((word) => `${word.replace("__", " ")} `);
       },
     });
 
+  // Drop the per-word compositor layers once the intro is done.
+  heroTlOne.eventCallback("onComplete", () => {
+    heroTitles.forEach((el) => ((el as HTMLElement).style.willChange = "auto"));
+  });
+
   heroTlOne.play(0).delay(2);
 
   const toggleAnimation = () => {

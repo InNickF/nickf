@@ -1,6 +1,8 @@
 @font-face {
   font-family: "NotoSans";
-  src: url("/fonts/NotoSans-Light.ttf") format("truetype");
+  src:
+    url("/fonts/NotoSans-Light.woff2") format("woff2"),
+    url("/fonts/NotoSans-Light.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -8,7 +10,9 @@
 
 @font-face {
   font-family: "NotoSerif";
-  src: url("/fonts/NotoSerifDisplay-Regular.ttf") format("truetype");
+  src:
+    url("/fonts/NotoSerifDisplay-Regular.woff2") format("woff2"),
+    url("/fonts/NotoSerifDisplay-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;

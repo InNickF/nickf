@@ -25,4 +25,22 @@ import Trail from "./Trail.astro";
     --animation-state: paused;
     z-index: 20;
   }
+  /* Don't keep animating blurred cards nobody can see. */
+  .testimonials-marquee-wrapper.is-offscreen {
+    --animation-state: paused;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .testimonials-marquee-wrapper {
+      --animation-state: paused;
+    }
+  }
 </style>
+
+<script>
+  const marquee = document.querySelector(".testimonials-marquee-wrapper");
+  if (marquee) {
+    new IntersectionObserver(([entry]) => {
+      marquee.classList.toggle("is-offscreen", !entry.isIntersecting);
+    }).observe(marquee);
+  }
+</script>

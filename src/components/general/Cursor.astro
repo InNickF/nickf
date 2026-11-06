@@ -32,24 +32,22 @@
     }
   }
 
-  body:has(button:hover, a:hover, .hoverable:hover, .cursor-pointer:hover)
-    [data-component="cursor"] {
+  /* States are toggled from JS (see script below) instead of
+     `body:has(a:hover, …)`, which forces document-wide style
+     invalidation on every hover change. */
+  [data-component="cursor"].is-hover {
     transition: transform 0.1s ease;
 
     span {
       transform: scale(2);
     }
   }
-  body:has(button:active, a:active, .hoverable:active, .cursor-pointer:active)
-    [data-component="cursor"] {
-    span {
-      transform: scale(0.33);
-    }
+  [data-component="cursor"].is-hover.is-active span {
+    transform: scale(0.33);
   }
-  body:has(.inverted:hover, .inverted:active) [data-component="cursor"] {
-    span {
-      transform: scale(0);
-    }
+  [data-component="cursor"].is-hidden span,
+  [data-component="cursor"].is-hidden.is-hover.is-active span {
+    transform: scale(0);
   }
 </style>
 <script>
@@ -57,12 +55,27 @@
     "[data-component='cursor']",
   )! as HTMLElement;
 
+  const HOVERABLE = "button, a, .hoverable, .cursor-pointer";
+  const INVERTED = ".inverted";
+
   let run = 0;
+  let x = 0;
+  let y = 0;
+  // id of the requestAnimationFrame already scheduled, 0 = none pending.
+  let pendingFrameId = 0;
+
+  const applyCursorPosition = () => {
+    pendingFrameId = 0;
+    cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+  };
 
   const handleMouseMove = (e: MouseEvent) => {
-    const x = e.clientX;
-    const y = e.clientY;
-    cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    x = e.clientX;
+    y = e.clientY;
+    // One style write per frame, no matter how many mousemove events fire.
+    if (!pendingFrameId) {
+      pendingFrameId = requestAnimationFrame(applyCursorPosition);
+    }
 
     // avoid first cursor appears animation
     if (run >= 2 && !cursor.classList.contains("active")) {
@@ -73,5 +86,18 @@
     }
   };
 
-  window.addEventListener("mousemove", handleMouseMove);
+  const updateHoverState = (target: EventTarget | null) => {
+    const el = target instanceof Element ? target : null;
+    cursor.classList.toggle("is-hover", !!el?.closest(HOVERABLE));
+    cursor.classList.toggle("is-hidden", !!el?.closest(INVERTED));
+  };
+
+  window.addEventListener("mousemove", handleMouseMove, { passive: true });
+  document.addEventListener("pointerover", (e) => updateHoverState(e.target));
+  document.addEventListener("pointerdown", () =>
+    cursor.classList.add("is-active"),
+  );
+  document.addEventListener("pointerup", () =>
+    cursor.classList.remove("is-active"),
+  );
 </script>

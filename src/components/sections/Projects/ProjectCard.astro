@@ -36,6 +36,9 @@ const project = Astro.props.project,
           alt={project.alt}
           class="w-full object-cover"
           loading="lazy"
+          decoding="async"
+          widths={[400, 640, 960, 1280]}
+          sizes="(min-width: 1536px) 576px, (min-width: 1280px) 448px, (min-width: 768px) calc(100vw - 21rem), 100vw"
         />
         <div class="grid grid-cols-1 gap-2">
           <h4 data-ignore-sizing class={titleClasses}>

@@ -2,17 +2,23 @@ import { PresentationControls, useGLTF } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Suspense, useRef } from "react";
 import type { Mesh } from "three";
+import useInView from "./hooks/useInView";
 
 export function LogoScene() {
+  const [wrapperRef, inView] = useInView<HTMLDivElement>();
   return (
-    <Canvas
-      className="cursor-[none!important]"
-      camera={{ position: [0, 0, 6], fov: 18, near: 1, far: 25 }}
-    >
-      <Suspense>
-        <Logo />
-      </Suspense>
-    </Canvas>
+    <div ref={wrapperRef} className="h-full w-full">
+      <Canvas
+        className="cursor-[none!important]"
+        frameloop={inView ? "always" : "never"}
+        dpr={[1, 1.5]}
+        camera={{ position: [0, 0, 6], fov: 18, near: 1, far: 25 }}
+      >
+        <Suspense>
+          <Logo />
+        </Suspense>
+      </Canvas>
+    </div>
   );
 }
 

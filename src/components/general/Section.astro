@@ -85,7 +85,7 @@ const isSticky = Astro.props.stickyTitle ?? true,
 
 <script>
   import { gsap } from "gsap";
-  import { ScrollTrigger } from "gsap/all";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
   gsap.registerPlugin(ScrollTrigger);
   const titles = Array.from(
     document.querySelectorAll(

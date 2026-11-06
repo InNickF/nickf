@@ -22,8 +22,10 @@ import {
   RigidBody,
 } from "@react-three/rapier";
 import { easing } from "maath";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { MathUtils, Mesh, Vector3 } from "three";
+import useInView from "./hooks/useInView";
+import { detectQuality, type Quality } from "./quality";
 import useThemeEvent from "./hooks/useThemeEvent";
 import { getDocumentStyles } from "./utils";
 interface ShuffleParams {
@@ -106,7 +108,31 @@ const shuffle = ({
 };
 
 export function Scene({ className, ...props }: CanvasProps) {
-  const [perfSucks, degrade] = useState(true);
+  // The device tier is decided once, at load, and never changes: switching it
+  // would remount materials/passes (shader compile + buffer allocation = stalls).
+  // It only picks cheaper SETTINGS; every cube, shadow and light is always there.
+  const [quality] = useState<Quality>(detectQuality);
+  const perfSucks = quality === "low";
+  const [wrapperRef, inView] = useInView<HTMLDivElement>();
+
+  // At runtime the monitor may only toggle ambient occlusion (the soft contact
+  // shadows), via the composer's `enabled` flag: no remount, so it's free to
+  // switch back on when fps recovers.
+  const [aoOn, setAoOn] = useState(true);
+
+  // Only judge fps once things have settled: load, shader compiles and the
+  // intro produce slow frames that are not representative. Unmounting the
+  // monitor while off-screen also resets it, so the paused gap isn't
+  // measured as one giant "slow frame" when the hero scrolls back in.
+  const [monitorReady, setMonitorReady] = useState(false);
+  useEffect(() => {
+    if (!inView) {
+      setMonitorReady(false);
+      return;
+    }
+    const id = setTimeout(() => setMonitorReady(true), 3000);
+    return () => clearTimeout(id);
+  }, [inView]);
   const [connectors, setConnectors] = useState(shuffle({}));
   useThemeEvent(() => {
     const { activeTheme, color, currentHue } = getDocumentStyles();
@@ -118,54 +144,72 @@ export function Scene({ className, ...props }: CanvasProps) {
   };
 
   return (
-    <Canvas
-      gl={{
-        alpha: true,
-        antialias: true,
-      }}
-      className={getClasses()}
-      shadows
-      dpr={[1, 1.5]}
-      camera={{ position: [20, 1, 15], fov: 18, near: 1, far: 50 }}
-      {...props}
-    >
-      <PerformanceMonitor
-        onDecline={() => degrade(true)}
-        onIncline={() => degrade(false)}
-      />
-      <Lights perfSucks={perfSucks} />
-      <Controls />
-      <Physics gravity={[0, 0, 0]}>
-        <Pointer />
-        {connectors.map((props, i) => {
-          const hasToRender = perfSucks ? i % 2 === 0 : true;
-          return hasToRender && <PhysicsElement key={i} {...props} />;
-        })}
-        <ExtraShapes
-          perfSucks={perfSucks}
-          isSquared={connectors[0]?.isSquared}
-        />
-      </Physics>
+    <div ref={wrapperRef} className="h-full w-full">
+      <Canvas
+        gl={{
+          alpha: true,
+          antialias: true,
+        }}
+        className={getClasses()}
+        shadows
+        dpr={perfSucks ? 1 : [1, 1.5]}
+        // Stop rendering (and the physics step) while the hero is off-screen.
+        frameloop={inView ? "always" : "never"}
+        camera={{ position: [20, 1, 15], fov: 18, near: 1, far: 50 }}
+        {...props}
+      >
+        {monitorReady && (
+          <PerformanceMonitor
+            flipflops={4}
+            onDecline={() => setAoOn(false)}
+            onIncline={() => setAoOn(true)}
+            onFallback={() => setAoOn(false)}
+          />
+        )}
+        <Lights />
+        <Controls />
+        <Physics gravity={[0, 0, 0]}>
+          <Pointer />
+          {connectors.map((props, i) => (
+            <PhysicsElement key={i} {...props} />
+          ))}
+          <ExtraShapes
+            perfSucks={perfSucks}
+            isSquared={connectors[0]?.isSquared}
+          />
+        </Physics>
 
-      <Envs perfSucks={perfSucks} />
-      <Effects perfSucks={perfSucks} />
-    </Canvas>
+        <Envs />
+        <Effects lowTier={perfSucks} enabled={aoOn} />
+      </Canvas>
+    </div>
   );
 }
 interface EffectsProps {
-  perfSucks?: boolean;
+  lowTier?: boolean;
+  enabled?: boolean;
 }
-function Effects({ perfSucks }: EffectsProps) {
-  return perfSucks ? null : (
-    <EffectComposer multisampling={14}>
-      <N8AO distanceFalloff={10} aoRadius={10} intensity={8} />
+// Always mounted (never remounted). `enabled={false}` just skips the pass and
+// lets R3F render normally. Weak devices get half-resolution AO instead of none.
+function Effects({ lowTier, enabled = true }: EffectsProps) {
+  return (
+    <EffectComposer multisampling={lowTier ? 0 : 4} enabled={enabled}>
+      <N8AO
+        distanceFalloff={10}
+        aoRadius={10}
+        intensity={8}
+        halfRes={lowTier}
+        quality={lowTier ? "performance" : "medium"}
+      />
     </EffectComposer>
   );
 }
 
-function Envs({ perfSucks }: { perfSucks?: boolean }) {
-  return perfSucks ? null : (
-    <Environment resolution={256}>
+// Lights + environment only affect the glass shapes. The env map is rendered
+// once (frames=1 by default), so it's cheap enough to keep on every tier.
+function Envs() {
+  return (
+    <Environment resolution={128}>
       <group rotation={[-Math.PI / 3, 0, 1]}>
         <Lightformer
           form="circle"
@@ -224,19 +268,18 @@ function ExtraShapes({
   return (
     <>
       <PhysicsElement position={[-10, -10, 10]} isSquared={isSquared}>
-        <SecondModel isSquared={isSquared} />
+        <SecondModel isSquared={isSquared} lowQuality={perfSucks} />
       </PhysicsElement>
-      {perfSucks ? null : (
-        <PhysicsElement position={[10, 10, 10]} isSquared={isSquared}>
-          <SecondModel isSquared={isSquared} />
-        </PhysicsElement>
-      )}
+      {/* Always rendered: removing bodies changes the composition. */}
+      <PhysicsElement position={[10, 10, 10]} isSquared={isSquared}>
+        <SecondModel isSquared={isSquared} lowQuality={perfSucks} />
+      </PhysicsElement>
     </>
   );
 }
 
-function Lights({ perfSucks }: { perfSucks?: boolean }) {
-  return perfSucks ? null : (
+function Lights() {
+  return (
     <>
       <ambientLight intensity={3} />
       <spotLight
@@ -364,11 +407,12 @@ function Model({
 function SecondModel({
   children,
   isSquared = false,
+  lowQuality = false,
 }: {
   children?: React.ReactNode;
   isSquared?: boolean;
+  lowQuality?: boolean;
 }) {
-  const ref = useRef<Mesh>(null!);
   const displacement = useTexture("/displacement.jpg");
   return (
     <Model isSquared={isSquared}>
@@ -377,8 +421,9 @@ function SecondModel({
         thickness={0.4}
         anisotropicBlur={0.5}
         chromaticAberration={0.5}
-        samples={12}
-        resolution={512}
+        // Low tier: fewer blur samples and a smaller transmission buffer.
+        samples={lowQuality ? 3 : 6}
+        resolution={lowQuality ? 128 : 256}
         map={displacement}
       />
     </Model>

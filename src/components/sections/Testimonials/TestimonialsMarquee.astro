@@ -20,6 +20,7 @@ const projects = await getCollection("testimonials"),
     visiblePersons.map((testimonial) => (
       <Card
         data-component="testimonial"
+        blur
         class={cardClasses}
         target="_blank"
         rel="noopener"
@@ -33,6 +34,7 @@ const projects = await getCollection("testimonials"),
             class="border-primary rounded-[var(--border-radius-general)] border-3"
             width={imageSize}
             height={imageSize}
+            densities={[1, 2]}
           />
           <div>
             <h6>{testimonial.data.name}</h6>
@@ -53,6 +55,7 @@ const projects = await getCollection("testimonials"),
     visiblePersons.map((testimonial) => (
       <Card
         data-component="testimonial"
+        blur
         class={cardClasses}
         target="_blank"
         rel="noopener"
@@ -66,6 +69,7 @@ const projects = await getCollection("testimonials"),
             class="border-primary rounded-[var(--border-radius-general)] border-3"
             width={imageSize}
             height={imageSize}
+            densities={[1, 2]}
           />
           <div>
             <h6>{testimonial.data.name}</h6>

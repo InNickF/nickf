@@ -35,6 +35,8 @@ const images = [
 
 <div data-component="trail" class="absolute inset-0 z-10 overflow-hidden">
   {
+    // One node per image is enough: at most ~5 are on screen at once
+    // (one every 250ms, each visible ~1.2s), so we just cycle through them.
     images.map((image) => {
       return (
         <Image
@@ -46,23 +48,6 @@ const images = [
         />
       );
     })
-  }
-  {
-    Array.from({ length: 8 }).map(() =>
-      images.map((image) => {
-        return (
-          <Image
-            aria-hidden="true"
-            format="webp"
-            aria-hidden="true"
-            class="pointer-events-none absolute h-48 w-48 scale-0 object-cover transition-[opacity,scale] duration-300 ease-in-out"
-            src={image}
-            alt="Trail image"
-            width={200}
-          />
-        );
-      }),
-    )
   }
 </div>
 
@@ -112,21 +97,26 @@ const images = [
         });
       },
     });
-    const nextIndex = index + 1;
-    currentIndex = imageCount === nextIndex ? 14 : nextIndex;
+    currentIndex = (index + 1) % imageCount;
   };
 
-  const throttledShowImage = throttle(showImage, 250);
-
-  trailContainer?.addEventListener("mousemove", (event) => {
-    const rect = trailContainer.getBoundingClientRect();
-    const x = (event as MouseEvent).clientX - rect.left;
-    const y = (event as MouseEvent).clientY - rect.top;
-
-    throttledShowImage({
+  // Layout read (getBoundingClientRect) only happens when an image is
+  // actually shown, not on every mousemove event.
+  const throttledShowAt = throttle((clientX: number, clientY: number) => {
+    const rect = trailContainer!.getBoundingClientRect();
+    showImage({
       index: currentIndex,
-      mouseX: x - 192 / 2,
-      mouseY: y - 192 / 2,
+      mouseX: clientX - rect.left - 192 / 2,
+      mouseY: clientY - rect.top - 192 / 2,
     });
-  });
+  }, 250);
+
+  trailContainer?.addEventListener(
+    "mousemove",
+    (event) => {
+      const { clientX, clientY } = event as MouseEvent;
+      throttledShowAt(clientX, clientY);
+    },
+    { passive: true },
+  );
 </script>
